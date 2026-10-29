@@ -1,0 +1,14 @@
+Etape 1 : créer sa branche
+git switch main
+git pull
+git switch -c nom/fonction_en_dev
+
+Étape 2 : travailler et pousser 
+git add .
+git commit -m "message position dans la fonction"
+git push -u origin nom/fonction_en_dev
+
+
+Étape 3 : se resynchroniser avec main pendant le travail
+git fetch origin
+git merge origin/main

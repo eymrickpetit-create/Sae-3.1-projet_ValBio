@@ -16,6 +16,13 @@ require_once __DIR__ . '/autoload.php';
 </head>
 
 <body>
+    <header>
+       <img src="img/valBioFull.png" alt =" logo valbio" id=logoHPage>
+       <?php
 
+       ?>
+       <img src="img/person.png" alt =" logo valbio" id=logopersonnel>
+    </header>
+    
 </body>
 </html>

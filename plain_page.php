@@ -11,18 +11,23 @@ require_once __DIR__ . '/autoload.php';
 <html lang="fr">
 <head>
     <meta charset="UTF-8"/>
+    <style type="text/css"></style>
     <link rel="stylesheet" type="text/css" href="ValBio_gestion.css"/>
-     <title>page exemple</title>
+    <title>page exemple</title>
 </head>
 
 <body>
-    <header>
-       <img src="img/valBioFull.png" alt =" logo valbio" id=logoHPage>
-       <?php
+    <nav  id=top>
+        <div id=logo><img src="img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
+        <div id=le_vide></div>
+        <div id=user>
+            <?php
 
-       ?>
-       <img src="img/person.png" alt =" logo valbio" id=logopersonnel>
-    </header>
+            ?>
+            <img src="img/logo_user.webp" alt ="logo user" id=logopersonnel>
+        </div>
+    </nav>
+    
     
 </body>
 </html>

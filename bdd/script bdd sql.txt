@@ -1,0 +1,158 @@
+CREATE TABLE prescripteur(
+   NoPrecripteur INT,
+   TypePrescripteur VARCHAR(1) NOT NULL,
+   AdressePres VARCHAR(50),
+   nomPres VARCHAR(50) NOT NULL,
+   CodePres SMALLINT,
+   LocalitePres VARCHAR(50),
+   TelephonePres CHAR(10),
+   PRIMARY KEY(NoPrecripteur)
+);
+
+CREATE TABLE chercheur(
+   NoChercheur INT,
+   NomCher VARCHAR(50) NOT NULL,
+   Specialite VARCHAR(50) NOT NULL,
+   AdresseCher VARCHAR(50),
+   CodeCher SMALLINT,
+   localiteCher VARCHAR(50),
+   TelephoneCher CHAR(10),
+   PRIMARY KEY(NoChercheur)
+);
+
+CREATE TABLE patient(
+   NoSS CHAR(15),
+   NomPa VARCHAR(50) NOT NULL,
+   PrenomPa VARCHAR(50) NOT NULL,
+   SexePa CHAR(1) NOT NULL,
+   NomUsagePa VARCHAR(50),
+   AdressePa VARCHAR(50),
+   CodePa VARCHAR(50),
+   LocalitePa VARCHAR(50),
+   TelephonePa CHAR(10),
+   DateNaissPa DATE NOT NULL,
+   ProfessionPa VARCHAR(50) NOT NULL,
+   NoDerDos INT,
+   DateDerDoss DATE,
+   ValidDroitPa VARCHAR(50),
+   ResteChargePrctPa VARCHAR(50),
+   PRIMARY KEY(NoSS)
+);
+
+CREATE TABLE LettreTarif(
+   NomLettre VARCHAR(5),
+   valeurLettre INT NOT NULL,
+   PRIMARY KEY(NomLettre)
+);
+
+CREATE TABLE operation(
+   NoOp INT,
+   CLasseOp CHAR(1),
+   CodeOp VARCHAR(10) NOT NULL,
+   nomOp VARCHAR(50) NOT NULL,
+   Titre1Op VARCHAR(50) NOT NULL,
+   Titre2Op VARCHAR(50),
+   Titre3Op VARCHAR(50),
+   UniteOp VARCHAR(5) NOT NULL,
+   UniteOp2 VARCHAR(5),
+   CoeffConv DECIMAL(13,3),
+   TypeSaisie VARCHAR(20) NOT NULL,
+   CodeAcquis VARCHAR(1) NOT NULL,
+   MaxAcquis INT NOT NULL,
+   ValOp INT NOT NULL,
+   CodeEdition INT NOT NULL,
+   NomLettre VARCHAR(5) NOT NULL,
+   PRIMARY KEY(NoOp, CLasseOp),
+   FOREIGN KEY(NomLettre) REFERENCES LettreTarif(NomLettre)
+);
+
+CREATE TABLE norme(
+   NoOp_1 INT,
+   CLasseOp_1 CHAR(1),
+   CategoriePa CHAR(1),
+   NoOp INT,
+   CLasseOp CHAR(1),
+   StdMinH DECIMAL(12,2) NOT NULL,
+   StdMinF DECIMAL(12,2) NOT NULL,
+   StdMinE DECIMAL(12,2) NOT NULL,
+   StdMaxH DECIMAL(12,2) NOT NULL,
+   StdMaxF DECIMAL(12,2) NOT NULL,
+   StdMaxE DECIMAL(12,2) NOT NULL,
+   PRIMARY KEY(NoOp_1, CLasseOp_1, CategoriePa, NoOp, CLasseOp),
+   UNIQUE(NoOp_1, CLasseOp_1),
+   FOREIGN KEY(NoOp_1, CLasseOp_1) REFERENCES operation(NoOp, CLasseOp)
+);
+
+CREATE TABLE Prelevement(
+   NoPrel INT,
+   libelle VARCHAR(50) NOT NULL,
+   PRIMARY KEY(NoPrel)
+);
+
+CREATE TABLE analyseMed(
+   NoAnalyse INT,
+   NomAnalyse VARCHAR(50) NOT NULL,
+   CodeAnalyse INT NOT NULL,
+   Titre1Analyse VARCHAR(50) NOT NULL,
+   Titre2Analyse VARCHAR(50),
+   ValAnanlyse INT NOT NULL,
+   NomLettre VARCHAR(5) NOT NULL,
+   NoPrel INT NOT NULL,
+   PRIMARY KEY(NoAnalyse),
+   FOREIGN KEY(NomLettre) REFERENCES LettreTarif(NomLettre),
+   FOREIGN KEY(NoPrel) REFERENCES Prelevement(NoPrel)
+);
+
+CREATE TABLE examen(
+   NoExamen INT,
+   DateOrdonnance DATE NOT NULL,
+   DateRealisation DATE,
+   DateCloture DATE,
+   Observations VARCHAR(200),
+   NoPrecripteur INT NOT NULL,
+   NoSS CHAR(15) NOT NULL,
+   PRIMARY KEY(NoExamen),
+   FOREIGN KEY(NoPrecripteur) REFERENCES prescripteur(NoPrecripteur),
+   FOREIGN KEY(NoSS) REFERENCES patient(NoSS)
+);
+
+CREATE TABLE contenir(
+   NoAnalyse INT,
+   NoExamen INT,
+   PRIMARY KEY(NoAnalyse, NoExamen),
+   FOREIGN KEY(NoAnalyse) REFERENCES analyseMed(NoAnalyse),
+   FOREIGN KEY(NoExamen) REFERENCES examen(NoExamen)
+);
+
+CREATE TABLE composer(
+   NoOp INT,
+   CLasseOp CHAR(1),
+   NoAnalyse INT,
+   PRIMARY KEY(NoOp, CLasseOp, NoAnalyse),
+   FOREIGN KEY(NoOp, CLasseOp) REFERENCES operation(NoOp, CLasseOp),
+   FOREIGN KEY(NoAnalyse) REFERENCES analyseMed(NoAnalyse)
+);
+
+CREATE TABLE resultat(
+   NoOp INT,
+   CLasseOp CHAR(1),
+   NoExamen INT,
+   ValeurDate DATE NOT NULL,
+   ValeurNum INT NOT NULL,
+   ValeurTexte VARCHAR(50) NOT NULL,
+   ObservationRes VARCHAR(200),
+   PRIMARY KEY(NoOp, CLasseOp, NoExamen),
+   FOREIGN KEY(NoOp, CLasseOp) REFERENCES operation(NoOp, CLasseOp),
+   FOREIGN KEY(NoExamen) REFERENCES examen(NoExamen)
+);
+
+CREATE TABLE prelever(
+   NoChercheur INT,
+   NoPrel INT,
+   NoExamen INT,
+   DatePrelevement DATE NOT NULL,
+   PRIMARY KEY(NoChercheur, NoPrel, NoExamen),
+   FOREIGN KEY(NoChercheur) REFERENCES chercheur(NoChercheur),
+   FOREIGN KEY(NoPrel) REFERENCES Prelevement(NoPrel),
+   FOREIGN KEY(NoExamen) REFERENCES examen(NoExamen)
+);

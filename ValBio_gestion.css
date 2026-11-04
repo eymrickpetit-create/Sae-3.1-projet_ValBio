@@ -1,21 +1,14 @@
-body{
+/* body{
     background-color:#F7F8FA;
     margin: 0px;
-}
+} */
 
 nav{
+    background-color:#004B79 ;
     margin:0px;
     display: flex;
     justify-content: space-between;
-    background-color:#004B79 ;
-    /*height: 100px;
-    width:auto;*/
-    position: relative;
-    top: 0px;
-    left: 0px;
-    border: none ;
-    border-top: none ;
-    box-shadow: none;
+    position: absolute;
 }
 
 #top{
@@ -25,6 +18,20 @@ nav{
     justify-content: space-between;
     align-items: center;
 }
+
+#bottom{
+    vertical-align: bottom;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    grid-template-columns: 25% auto ;
+    grid-template-rows: 200px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
 #logo{
 
 }

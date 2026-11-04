@@ -29,5 +29,14 @@ require_once __DIR__ . '/autoload.php';
     </nav>
     
     
+
+
+    <nav  id=bottom>
+        <div id=logo></div>
+            <p>
+                Paramètres de l'application
+            </p>
+        <div id=le_vide></div>
+    </nav>
 </body>
 </html>

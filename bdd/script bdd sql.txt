@@ -39,7 +39,7 @@ CREATE TABLE patient(
    PRIMARY KEY(NoSS)
 );
 
-CREATE TABLE LettreTarif(
+CREATE TABLE lettreTarif(
    NomLettre VARCHAR(5),
    valeurLettre INT NOT NULL,
    PRIMARY KEY(NomLettre)
@@ -83,7 +83,7 @@ CREATE TABLE norme(
    FOREIGN KEY(NoOp_1, CLasseOp_1) REFERENCES operation(NoOp, CLasseOp)
 );
 
-CREATE TABLE Prelevement(
+CREATE TABLE prelevement(
    NoPrel INT,
    libelle VARCHAR(50) NOT NULL,
    PRIMARY KEY(NoPrel)

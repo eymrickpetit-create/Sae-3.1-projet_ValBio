@@ -156,3 +156,10 @@ CREATE TABLE prelever(
    FOREIGN KEY(NoPrel) REFERENCES Prelevement(NoPrel),
    FOREIGN KEY(NoExamen) REFERENCES examen(NoExamen)
 );
+
+CREATE TABLE utilisateur(
+   Login VARCHAR(50),
+   MotDePasse VARCHAR(50) NOT NULL,
+   RoleUser VARCHAR(50) NOT NULL,
+   PRIMARY KEY(Login)
+);

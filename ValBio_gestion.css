@@ -1,13 +1,40 @@
-header{
+body{
+    background-color:#F7F8FA;
+    margin: 0px;
+}
+
+nav{
+    margin:0px;
     display: flex;
     justify-content: space-between;
-    background-color:#0B4A7F ;
-    height: 100px;
-     margin: 0;
+    background-color:#004B79 ;
+    /*height: 100px;
+    width:auto;*/
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border: none ;
+    border-top: none ;
+    box-shadow: none;
+}
+
+#top{
+    display: grid;
+    grid-template-columns: 100px auto 100px;
+    grid-template-rows: 90px;
+    justify-content: space-between;
+    align-items: center;
+}
+#logo{
+
+}
+#user{
+    right
 }
 
 #logoHPage{
-    width: 150px;
+    margin: 5px;
+    width: 180px;
     height: 80px;
 }
 #logopersonnel
@@ -15,4 +42,4 @@ header{
     padding: 1%;
     width: 70px;
     height: 70px;
-}
+    vertical-align: middle;

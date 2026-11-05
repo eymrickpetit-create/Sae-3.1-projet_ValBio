@@ -19,7 +19,7 @@ require_once __DIR__ . '/autoload.php';
     <header>
        <img src="img/valBioFull.png" alt =" logo valbio" id=logoHPage>
        <?php
-
+       
        ?>
        <img src="img/person.png" alt =" logo valbio" id=logopersonnel>
     </header>

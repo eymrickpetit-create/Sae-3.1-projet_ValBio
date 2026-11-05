@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && $user->verifyPassword($_POST['password'] ?? '')) {
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user->getId();
+        $_SESSION['state'] = true;
         header('Location: dashboard.php');
         exit;
     }

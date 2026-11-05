@@ -17,6 +17,7 @@ require_once __DIR__ . '/autoload.php';
 </head>
 
 <body>
+
     <nav  id=top>
         <div id=logo><img src="img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
         <div id=le_vide></div>
@@ -27,6 +28,7 @@ require_once __DIR__ . '/autoload.php';
             <img src="img/logo_user.webp" alt ="logo user" id=logopersonnel>
         </div>
     </nav>
+
     
     
 

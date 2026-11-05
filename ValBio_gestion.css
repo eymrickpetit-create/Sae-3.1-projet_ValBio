@@ -4,12 +4,18 @@ body{
 }
 
 nav{
-    background-color:#004B79 ;
     margin:0px;
-    width: 100%;
     display: flex;
     justify-content: space-between;
-    position: absolute;
+    background-color:#004B79 ;
+    /*height: 100px;
+    width:auto;*/
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border: none ;
+    border-top: none ;
+    box-shadow: none;
 }
 
 #top{
@@ -39,11 +45,11 @@ nav{
 }
 
 
+}
 #logo{
 
 }
 #user{
-    
 }
 
 #logoHPage{
@@ -60,5 +66,4 @@ nav{
 }
 
 #text{
-    left: 0%;
 }

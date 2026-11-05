@@ -21,7 +21,8 @@ CREATE TABLE chercheur(
 );
 
 CREATE TABLE patient(
-   NoSS CHAR(15),
+   identifiantPa INT AUTO_INCREMENT,
+   NoSS CHAR(15) NOT NULL,
    NomPa VARCHAR(50) NOT NULL,
    PrenomPa VARCHAR(50) NOT NULL,
    SexePa CHAR(1) NOT NULL,
@@ -36,7 +37,8 @@ CREATE TABLE patient(
    DateDerDoss DATE,
    ValidDroitPa VARCHAR(50),
    ResteChargePrctPa VARCHAR(50),
-   PRIMARY KEY(NoSS)
+   PRIMARY KEY(identifiantPa),
+   UNIQUE(NoSS)
 );
 
 CREATE TABLE lettreTarif(
@@ -63,7 +65,7 @@ CREATE TABLE operation(
    CodeEdition INT NOT NULL,
    NomLettre VARCHAR(5) NOT NULL,
    PRIMARY KEY(NoOp, CLasseOp),
-   FOREIGN KEY(NomLettre) REFERENCES LettreTarif(NomLettre)
+   FOREIGN KEY(NomLettre) REFERENCES lettreTarif(NomLettre)
 );
 
 CREATE TABLE norme(
@@ -99,8 +101,8 @@ CREATE TABLE analyseMed(
    NomLettre VARCHAR(5) NOT NULL,
    NoPrel INT NOT NULL,
    PRIMARY KEY(NoAnalyse),
-   FOREIGN KEY(NomLettre) REFERENCES LettreTarif(NomLettre),
-   FOREIGN KEY(NoPrel) REFERENCES Prelevement(NoPrel)
+   FOREIGN KEY(NomLettre) REFERENCES lettreTarif(NomLettre),
+   FOREIGN KEY(NoPrel) REFERENCES prelevement(NoPrel)
 );
 
 CREATE TABLE examen(
@@ -110,10 +112,10 @@ CREATE TABLE examen(
    DateCloture DATE,
    Observations VARCHAR(200),
    NoPrecripteur INT NOT NULL,
-   NoSS CHAR(15) NOT NULL,
+   identifiantPa INT NOT NULL,
    PRIMARY KEY(NoExamen),
    FOREIGN KEY(NoPrecripteur) REFERENCES prescripteur(NoPrecripteur),
-   FOREIGN KEY(NoSS) REFERENCES patient(NoSS)
+   FOREIGN KEY(identifiantPa) REFERENCES patient(identifiantPa)
 );
 
 CREATE TABLE contenir(
@@ -153,13 +155,13 @@ CREATE TABLE prelever(
    DatePrelevement DATE NOT NULL,
    PRIMARY KEY(NoChercheur, NoPrel, NoExamen),
    FOREIGN KEY(NoChercheur) REFERENCES chercheur(NoChercheur),
-   FOREIGN KEY(NoPrel) REFERENCES Prelevement(NoPrel),
+   FOREIGN KEY(NoPrel) REFERENCES prelevement(NoPrel),
    FOREIGN KEY(NoExamen) REFERENCES examen(NoExamen)
 );
 
 CREATE TABLE utilisateur(
-   Login VARCHAR(50),
+   LoginU VARCHAR(50),
    MotDePasse VARCHAR(50) NOT NULL,
    RoleUser VARCHAR(50) NOT NULL,
-   PRIMARY KEY(Login)
+   PRIMARY KEY(LoginU)
 );

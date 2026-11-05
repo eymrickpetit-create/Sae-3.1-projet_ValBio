@@ -18,7 +18,7 @@ require_once __DIR__ . '/../autoload.php';
 <head>
     <meta charset="UTF-8"/>
     <style type="text/css"></style>
-    <!-- <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/> -->
+    <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/>
     <title>page exemple</title>
 </head>
 

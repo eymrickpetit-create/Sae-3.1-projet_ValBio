@@ -1,6 +1,6 @@
 <?php
 //ajout autoload
-require_once __DIR__ . '/autoload.php';
+require_once __DIR__ . '/../autoload.php';
 
 session_start();
 $error = '';
@@ -35,11 +35,11 @@ $_SESSION['csrf'] = bin2hex(random_bytes(32));
 
 <body>
     <header>
-       <img src="../img/valBioFull.png" alt =" logo valbio" id=logoHPage>
+       <img src="../img/valBioFull.png" alt="logo valbio" id="logoHPage">
        <?php
 
        ?>
-       <img src="../img/person.png" alt =" logo valbio" id=logopersonnel>
+       <img src="../img/person.png" alt="logo valbio" id="logopersonnel">
     </header>
 <form method="post">
     <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">

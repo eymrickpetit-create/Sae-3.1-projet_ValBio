@@ -1,23 +1,14 @@
 <?php
+// Classes/autoload.php
 
-// Dossier contenant les classes
-define('CLASSES_DIR', __DIR__ . '/<Classes/');
-
-/** Chargement à la demande */
-spl_autoload_register(function (string $class) {
-    // Ne garde que le nom de la classe (sans namespace)
-    $name = basename(str_replace('\\', '/', $class));
-    $file = CLASSES_DIR . $name . '.php';
-
-    if (is_file($file)) {
+spl_autoload_register(function ($className) {
+    // Si la classe utilise des namespaces, on remplace les antislashs par des slashes
+    $className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
+    
+    // Chemin vers le dossier Classes (peu importe d'où est appelé l'autoloader)
+    $file = __DIR__ . '/' . $className . '.php';
+    
+    if (file_exists($file)) {
         require_once $file;
     }
 });
-
-/** Charge tous les fichiers du dossier d'un coup */
-function loadAllClasses(): void
-{
-    foreach (glob(CLASSES_DIR . '*.php') as $file) {
-        require_once $file;
-    }
-}

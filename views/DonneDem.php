@@ -1,6 +1,6 @@
 <?php
 //ajout autoload
-require_once __DIR__ . '/../autoload.php';
+require_once __DIR__ . '/../Classes/autoload.php';
 
 // Chargement à la demande d'un classe est automatique
 // Ou tout charger si besoin

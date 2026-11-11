@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user->getId();
         $_SESSION['state'] = true;
-        header('Location: dashboard.php');
+        header('Location: Choosedashboard.php'); // envois vers script qui selectionne la bonnne page acceuil selon le role detecté
         exit;
     }
     $error = 'Identifiants incorrects';

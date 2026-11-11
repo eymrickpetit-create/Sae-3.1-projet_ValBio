@@ -3,7 +3,7 @@
 // S'inspire du pattern singleton pour n'ouvrir qu'une seule connexion
 // Utilisation :
 //    $bd = MaBD::getInstance(); // $bd est un objet PDO
-class MaBD {
+class Bd {
 
    static private $pdo = null; // Le singleton
 

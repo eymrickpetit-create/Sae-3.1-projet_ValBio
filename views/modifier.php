@@ -5,13 +5,13 @@ require_once __DIR__ . '/../Classes/autoload.php';
 // Chargement à la demande d'un classe est automatique
 // Ou tout charger si besoin
 //loadAllClasses();
-// if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
+if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 
-// }else {
-//     // Aucune session active ou utilisateur non connecté : on redirige
-//     header('Location: login.php');
-//     exit();
-// }
+}else {
+    // Aucune session active ou utilisateur non connecté : on redirige
+    header('Location: login.php');
+    exit();
+}
 
 if(!isset($_POST['login'])){
     header('Location: DonneUser.php');

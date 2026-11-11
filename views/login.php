@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die('Requête invalide');
     }
 
-    $dao  = new UserDAO();
+    $dao  = new UtilisateurDAO(Bd::getInstance());
     $user = $dao->findByLogin($_POST['login'] ?? '');
 
     if ($user && $user->verifyPassword($_POST['password'] ?? '')) {

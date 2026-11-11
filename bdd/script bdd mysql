@@ -1,0 +1,182 @@
+-- Création de la base de données (optionnelle)
+-- CREATE DATABASE IF NOT EXISTS labo_medical;
+-- USE labo_medical;
+
+-- Désactivation temporaire des vérifications de clés étrangères pour l'ordre de création
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- 1. Tables sans dépendances directes
+CREATE TABLE prescripteur (
+    NoPrecripteur INT NOT NULL,
+    TypePrescripteur VARCHAR(1) NOT NULL,
+    AdressePres VARCHAR(50),
+    nomPres VARCHAR(50) NOT NULL,
+    CodePres SMALLINT,
+    LocalitePres VARCHAR(50),
+    TelephonePres CHAR(10),
+    PRIMARY KEY (NoPrecripteur)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE chercheur (
+    NoChercheur INT NOT NULL,
+    NomCher VARCHAR(50) NOT NULL,
+    Specialite VARCHAR(50) NOT NULL,
+    AdresseCher VARCHAR(50),
+    CodeCher SMALLINT,
+    localiteCher VARCHAR(50),
+    TelephoneCher CHAR(10),
+    PRIMARY KEY (NoChercheur)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE patient (
+    identifiantPa INT AUTO_INCREMENT,
+    NoSS CHAR(15) NOT NULL,
+    NomPa VARCHAR(50) NOT NULL,
+    PrenomPa VARCHAR(50) NOT NULL,
+    SexePa CHAR(1) NOT NULL,
+    NomUsagePa VARCHAR(50),
+    AdressePa VARCHAR(50),
+    CodePa VARCHAR(50),
+    LocalitePa VARCHAR(50),
+    TelephonePa CHAR(10),
+    DateNaissPa DATE NOT NULL,
+    ProfessionPa VARCHAR(50) NOT NULL,
+    NoDerDos INT,
+    DateDerDoss DATE,
+    ValidDroitPa VARCHAR(50),
+    ResteChargePrctPa VARCHAR(50),
+    PRIMARY KEY (identifiantPa),
+    UNIQUE KEY (NoSS)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE lettreTarif (
+    NomLettre VARCHAR(5) NOT NULL,
+    valeurLettre INT NOT NULL,
+    PRIMARY KEY (NomLettre)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE prelevement (
+    NoPrel INT NOT NULL,
+    libelle VARCHAR(50) NOT NULL,
+    PRIMARY KEY (NoPrel)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE utilisateur (
+    LoginU VARCHAR(50) NOT NULL,
+    MotDePasse VARCHAR(50) NOT NULL,
+    RoleUser VARCHAR(50) NOT NULL,
+    PRIMARY KEY (LoginU)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 2. Tables dépendant de lettreTarif et prelevement
+CREATE TABLE operation (
+    NoOp INT NOT NULL,
+    CLasseOp CHAR(1) NOT NULL,
+    CodeOp VARCHAR(10) NOT NULL,
+    nomOp VARCHAR(50) NOT NULL,
+    Titre1Op VARCHAR(50) NOT NULL,
+    Titre2Op VARCHAR(50),
+    Titre3Op VARCHAR(50),
+    UniteOp VARCHAR(5) NOT NULL,
+    UniteOp2 VARCHAR(5),
+    CoeffConv DECIMAL(13,3),
+    TypeSaisie VARCHAR(20) NOT NULL,
+    CodeAcquis VARCHAR(1) NOT NULL,
+    MaxAcquis INT NOT NULL,
+    ValOp INT NOT NULL,
+    CodeEdition INT NOT NULL,
+    NomLettre VARCHAR(5) NOT NULL,
+    PRIMARY KEY (NoOp, CLasseOp),
+    FOREIGN KEY (NomLettre) REFERENCES lettreTarif(NomLettre)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE analyseMed (
+    NoAnalyse INT NOT NULL,
+    NomAnalyse VARCHAR(50) NOT NULL,
+    CodeAnalyse INT NOT NULL,
+    Titre1Analyse VARCHAR(50) NOT NULL,
+    Titre2Analyse VARCHAR(50),
+    ValAnanlyse INT NOT NULL,
+    NomLettre VARCHAR(5) NOT NULL,
+    NoPrel INT NOT NULL,
+    PRIMARY KEY (NoAnalyse),
+    FOREIGN KEY (NomLettre) REFERENCES lettreTarif(NomLettre),
+    FOREIGN KEY (NoPrel) REFERENCES prelevement(NoPrel)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 3. Tables dépendant de operation
+CREATE TABLE norme (
+    NoOp_1 INT NOT NULL,
+    CLasseOp_1 CHAR(1) NOT NULL,
+    CategoriePa CHAR(1) NOT NULL,
+    NoOp INT NOT NULL,
+    CLasseOp CHAR(1) NOT NULL,
+    StdMinH DECIMAL(12,2) NOT NULL,
+    StdMinF DECIMAL(12,2) NOT NULL,
+    StdMinE DECIMAL(12,2) NOT NULL,
+    StdMaxH DECIMAL(12,2) NOT NULL,
+    StdMaxF DECIMAL(12,2) NOT NULL,
+    StdMaxE DECIMAL(12,2) NOT NULL,
+    PRIMARY KEY (NoOp_1, CLasseOp_1, CategoriePa, NoOp, CLasseOp),
+    UNIQUE KEY (NoOp_1, CLasseOp_1),
+    FOREIGN KEY (NoOp_1, CLasseOp_1) REFERENCES operation(NoOp, CLasseOp)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 4. Tables dépendant de prescripteur et patient
+CREATE TABLE examen (
+    NoExamen INT NOT NULL,
+    DateOrdonnance DATE NOT NULL,
+    DateRealisation DATE,
+    DateCloture DATE,
+    Observations VARCHAR(200),
+    NoPrecripteur INT NOT NULL,
+    identifiantPa INT NOT NULL,
+    PRIMARY KEY (NoExamen),
+    FOREIGN KEY (NoPrecripteur) REFERENCES prescripteur(NoPrecripteur),
+    FOREIGN KEY (identifiantPa) REFERENCES patient(identifiantPa)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 5. Tables de liaisons finales (contenir, composer, resultat, prelever)
+CREATE TABLE contenir (
+    NoAnalyse INT NOT NULL,
+    NoExamen INT NOT NULL,
+    PRIMARY KEY (NoAnalyse, NoExamen),
+    FOREIGN KEY (NoAnalyse) REFERENCES analyseMed(NoAnalyse),
+    FOREIGN KEY (NoExamen) REFERENCES examen(NoExamen)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE composer (
+    NoOp INT NOT NULL,
+    CLasseOp CHAR(1) NOT NULL,
+    NoAnalyse INT NOT NULL,
+    PRIMARY KEY (NoOp, CLasseOp, NoAnalyse),
+    FOREIGN KEY (NoOp, CLasseOp) REFERENCES operation(NoOp, CLasseOp),
+    FOREIGN KEY (NoAnalyse) REFERENCES analyseMed(NoAnalyse)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE resultat (
+    NoOp INT NOT NULL,
+    CLasseOp CHAR(1) NOT NULL,
+    NoExamen INT NOT NULL,
+    ValeurDate DATE NOT NULL,
+    ValeurNum INT NOT NULL,
+    ValeurTexte VARCHAR(50) NOT NULL,
+    ObservationRes VARCHAR(200),
+    PRIMARY KEY (NoOp, CLasseOp, NoExamen),
+    FOREIGN KEY (NoOp, CLasseOp) REFERENCES operation(NoOp, CLasseOp),
+    FOREIGN KEY (NoExamen) REFERENCES examen(NoExamen)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE prelever (
+    NoChercheur INT NOT NULL,
+    NoPrel INT NOT NULL,
+    NoExamen INT NOT NULL,
+    DatePrelevement DATE NOT NULL,
+    PRIMARY KEY (NoChercheur, NoPrel, NoExamen),
+    FOREIGN KEY (NoChercheur) REFERENCES chercheur(NoChercheur),
+    FOREIGN KEY (NoPrel) REFERENCES prelevement(NoPrel),
+    FOREIGN KEY (NoExamen) REFERENCES examen(NoExamen)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Réactivation des vérifications de clés étrangères
+SET FOREIGN_KEY_CHECKS = 1;

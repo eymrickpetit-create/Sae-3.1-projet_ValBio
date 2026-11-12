@@ -20,24 +20,50 @@ class UtilisateurDAO extends DAO {
     }
 
     public function insert(object $obj): int {
-        // rempli params avec les champs ou null si non definis
-        $cols = ['LoginU', 'MotDePasse', 'RoleUser'];
-        $params = [];
-        foreach ($cols as $c) {
-            $params[$c] = $obj->getFields()[$c] ?? null;
-        }
-       $stmt =  $this->pdo->prepare("INSERT INTO utilisateur (LoginU, MotDePasse, RoleUser)
-        VALUES (:LoginU, :MotDePasse, :RoleUser)");
-       $res = $stmt->execute($params);
-       return 0;
+    $cols = ['LoginU', 'MotDePasse', 'RoleUser'];
+    $params = [];
+    $fields = $obj->getFields();          // appelé une seule fois
+    foreach ($cols as $c) {
+        $params[$c] = $fields[$c] ?? null;
     }
 
+    // hachage du mot de passe avant l'insertion
+    if ($params['MotDePasse'] !== null) {
+        $params['MotDePasse'] = password_hash($params['MotDePasse'], PASSWORD_DEFAULT);
+    }
+
+    $stmt = $this->pdo->prepare(
+        "INSERT INTO utilisateur (LoginU, MotDePasse, RoleUser)
+         VALUES (:LoginU, :MotDePasse, :RoleUser)"
+    );
+    $stmt->execute($params);
+
+    return $stmt->rowCount();             // 1 si la ligne a été insérée
+}
+
+
     public function update(object $obj): int {
-       $stmt = $this->pdo->prepare("UPDATE utilisateur SET 
-       MotDePasse=:MotDePasse, RoleUser=:RoleUser
-       WHERE LoginU=:LoginU");
-       $res = $stmt->execute($obj->getFields());
-       return 0;
+        $cols = ['LoginU', 'MotDePasse', 'RoleUser'];
+        $fields = $obj->getFields();
+        $params = [];
+        foreach ($cols as $c) {
+            $params[$c] = $fields[$c] ?? null;
+        }
+
+        // ne hache que si ce n'est pas déjà un hash
+        if ($params['MotDePasse'] !== null
+            && password_get_info($params['MotDePasse'])['algo'] === null) {
+            $params['MotDePasse'] = password_hash($params['MotDePasse'], PASSWORD_DEFAULT);
+        }
+
+        $stmt = $this->pdo->prepare(
+            "UPDATE utilisateur
+            SET MotDePasse = :MotDePasse, RoleUser = :RoleUser
+            WHERE LoginU = :LoginU"
+        );
+        $stmt->execute($params);
+
+        return $stmt->rowCount();
     }
 
     public function delete(object $obj): int {
@@ -45,6 +71,8 @@ class UtilisateurDAO extends DAO {
         $res = $stmt->execute(array($obj->LoginU));
         return 0;
     }
+
+   
 
 
 }

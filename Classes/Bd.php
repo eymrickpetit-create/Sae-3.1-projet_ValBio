@@ -10,8 +10,10 @@ class Bd {
    // Obenir le singleton
    static function getInstance(): ?PDO {
       if (self::$pdo == null) {
-         $dsn = "mysql:host=gigondas;dbname=petitpoe;charset=utf8";
-         self::$pdo = new PDO($dsn, "petitpoe", "petitpoe");
+         // $dsn = "mysql:host=gigondas;dbname=petitpoe;charset=utf8";
+         // self::$pdo = new PDO($dsn, "petitpoe", "petitpoe");
+         $dsn = "mysql:host=localhost;dbname=petitpoe;charset=utf8";
+         self::$pdo = new PDO($dsn, "arleq1", "oct");
       }
       return self::$pdo;
    }

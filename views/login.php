@@ -11,11 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $dao  = new UtilisateurDAO(Bd::getInstance());
-    $user = $dao->findByLogin($_POST['login'] ?? '');
+    $user = $dao->getOne($_POST['login'] ?? '');
 
     if ($user && $user->verifyPassword($_POST['password'] ?? '')) {
         session_regenerate_id(true);
-        $_SESSION['user_id'] = $user->getId();
+        $_SESSION['user_id'] = $user->LoginU;
         $_SESSION['state'] = true;
         header('Location: Choosedashboard.php'); // envois vers script qui selectionne la bonnne page acceuil selon le role detecté
         exit;

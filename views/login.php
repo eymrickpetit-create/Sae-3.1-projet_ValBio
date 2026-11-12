@@ -1,5 +1,7 @@
 <?php
-//ajout autoload
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
+
 require_once __DIR__ . '/../Classes/autoload.php';
 
 session_start();
@@ -9,13 +11,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!hash_equals($_SESSION['csrf'] ?? '', $_POST['csrf'] ?? '')) {
         die('Requête invalide');
     }
+    $pdo = MaBD::getInstance();
 
-    $dao  = new UserDAO();
-    $user = $dao->findByLogin($_POST['login'] ?? '');
+    $dao  = new UtilisateurDAO($pdo);
+    $user = $dao->getOne($_POST['login'] ?? '');
 
-    if ($user && $user->verifyPassword($_POST['password'] ?? '')) {
+    try {
+            $user = $dao->getOne($_POST['login'] ?? '');
+    } catch (OutOfBoundsException $e) {
+        $user = null;
+    }
+
+if ($user && $user->verifierMotDePasse($_POST['password'] ?? '')) {
+    // ... le reste ne change pas
+}
+
+    if ($user && $user->verifierMotDePasse($_POST['password'] ?? '')) {
         session_regenerate_id(true);
-        $_SESSION['user_id'] = $user->getId();
+        $_SESSION['user_login'] = $user->getLogin();
         $_SESSION['state'] = true;
         header('Location: dashboard.php');
         exit;
@@ -30,24 +43,21 @@ $_SESSION['csrf'] = bin2hex(random_bytes(32));
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/>
-     <title>connexion</title>
+    <title>connexion</title>
 </head>
 
 <body>
     <header>
-       <img src="../img/valBioFull.png" alt="logo valbio" id="logoHPage">
-       <?php
-
-       ?>
-       <img src="../img/person.png" alt="logo valbio" id="logopersonnel">
+        <img src="../img/valBioFull.png" alt="logo valbio" id="logoHPage">
+        <img src="../img/person.png" alt="icône utilisateur" id="logopersonnel">
     </header>
-<form method="post">
-    <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
-    <input type="string" name="login" required>
-    <input type="password" name="password" required>
-    <button>Connexion</button>
-    <p><?= htmlspecialchars($error) ?></p>
-</form>
 
+    <form method="post">
+        <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+        <input type="text" name="login" required autocomplete="username">
+        <input type="password" name="password" required autocomplete="current-password">
+        <button>Connexion</button>
+        <p><?= htmlspecialchars($error) ?></p>
+    </form>
 </body>
 </html>

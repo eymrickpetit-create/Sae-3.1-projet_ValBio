@@ -2,12 +2,14 @@
 
 class UtilisateurDAO extends DAO {
 
-
-
     public function getOne(string|int|array $key): Utilisateur {
         $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE LoginU = ?");
         $stmt->execute(array($key));
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row === false) {
+            throw new OutOfBoundsException('Utilisateur introuvable');
+        }
         return new Utilisateur($row);
     }
 

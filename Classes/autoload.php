@@ -1,7 +1,7 @@
 <?php
 
 // Dossier contenant les classes
-define('CLASSES_DIR', __DIR__ . '/<Classes/');
+define('CLASSES_DIR', __DIR__ . '/');
 
 /** Chargement à la demande */
 spl_autoload_register(function (string $class) {

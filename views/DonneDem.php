@@ -1,4 +1,7 @@
 <?php
+
+// page de création hors site final
+
 //ajout autoload
 require_once __DIR__ . '/../Classes/autoload.php';
 

@@ -80,7 +80,7 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 
                 <p id="texteExplique"></p>
 
-                <input type="submit" formaction="modifier.php" value="modifier">
+                <input type="submit" formaction="modifierUtilisateur.php" value="modifier">
                 <input type="submit" formaction="creeUser.php" value="créer un utilisateur" formnovalidate>
                 <input type="submit" formaction="suppUser.php" value="supprimer un utilisateur">
             </form>

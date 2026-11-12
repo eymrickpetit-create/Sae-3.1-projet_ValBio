@@ -19,7 +19,7 @@ $user =  $userdao->getOne($_SESSION['user_id']);
 
 switch($user->RoleUser){
     case "admin" :
-        header('Location: DashBoardAdmin.php');
+        header('Location: DashBoardAdDmin.php');
         exit();
     case "secrétaire" :
         header('Location: DashBoardSecretaire.php');

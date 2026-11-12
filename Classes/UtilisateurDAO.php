@@ -8,6 +8,7 @@ class UtilisateurDAO extends DAO {
         $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE LoginU = ?");
         $stmt->execute(array($key));
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        var_dump($stmt);
 
         if ($row === false) {
             throw new OutOfBoundsException('Utilisateur introuvable');

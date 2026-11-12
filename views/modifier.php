@@ -29,6 +29,7 @@ if (isset($_POST['valider'])) {
     exit();
 }
 
+
 // Sinon : on charge l'utilisateur choisi pour pré-remplir le formulaire
     $user = $users->getOne($_POST['login']);
 ?>

@@ -14,12 +14,21 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
     exit();
 }
 
-$userdao = new UtilisateurDAO(Bd::getInstace());
+$userdao = new UtilisateurDAO(Bd::getInstance());
 $user =  $userdao->getOne($_SESSION['user_id']);
 
 switch($user->RoleUser){
     case "admin" :
-        
-        
+        header('Location: DashBoardAdDmin.php');
+        exit();
+    case "secrétaire" :
+        header('Location: DashBoardSecretaire.php');
+        exit();
+    case "chercheur" :
+        header('Location: DashBoardChercheur.php');
+        exit();
+    default:
+        header('Location: login.php');
+        exit();     
 }
 ?>

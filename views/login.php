@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
+
 //ajout autoload
 require_once __DIR__ . '/../autoload.php';
 
@@ -10,12 +13,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die('Requête invalide');
     }
 
-    $dao  = new UserDAO();
-    $user = $dao->findByLogin($_POST['login'] ?? '');
+    $pdo = Bd::getInstance();
+    $dao  = new UtilisateurDAO($pdo);
+    $user = $dao->getOne($_POST['login'] ?? '');
 
-    if ($user && $user->verifyPassword($_POST['password'] ?? '')) {
+    try {// verification que utilisateur existe
+            $user = $dao->getOne($_POST['login'] ?? '');
+    } catch (OutOfBoundsException $e) {
+        $user = null;
+    }
+
+    if ($user && $user->verifierMotDePasse($_POST['password'] ?? '')) {
         session_regenerate_id(true);
-        $_SESSION['user_id'] = $user->getId();
+        $_SESSION['user_id'] = $user->getLogin();
         $_SESSION['state'] = true;
         header('Location: dashboard.php');
         exit;
@@ -44,7 +54,7 @@ $_SESSION['csrf'] = bin2hex(random_bytes(32));
             <img src="img/logo_user.webp" alt ="logo user" id=logopersonnel>
         </div> -->
     </nav>
-    <form method="post" id="formId>
+    <form method="post" id="formId">
     <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
     <input type="string" name="login" required>
     <input type="password" name="password" required>

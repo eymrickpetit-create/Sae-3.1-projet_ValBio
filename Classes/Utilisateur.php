@@ -14,7 +14,7 @@ class Utilisateur extends TableObject {
         return new self([
             'LoginU'     => $login,
             'MotDePasse' => password_hash($clair, PASSWORD_DEFAULT),
-            'RoleUser'   => role,
+            'RoleUser'   => $role,
         ]);
     }
 

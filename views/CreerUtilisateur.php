@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login    = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm  = $_POST['confirm'] ?? '';
+    $role = $_POST['role'] ?? '';
 
     if ($login === '' || strlen($login) > 50) {
         $error = 'Login invalide (1 à 50 caractères)';
@@ -20,12 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($password !== $confirm) {
         $error = 'Les mots de passe ne correspondent pas';
     } else {
-    $dao = new UtilisateurDAO();
+    $dao = new UtilisateurDAO(Bd::getInstance());
     try {
         $dao->getOne($login);
         $error = 'Ce login existe déjà';
     } catch (OutOfBoundsException $e) {
-        $dao->insert(Utilisateur::creer($login, $password));
+        $dao->insert(Utilisateur::creer($login, $password,$role));
         header('Location: login.php');
         exit;
     }
@@ -53,6 +54,9 @@ $_SESSION['csrf'] = bin2hex(random_bytes(32));
 
         <label for="confirm">Confirmation</label>
         <input type="password" id="confirm" name="confirm" required autocomplete="new-password">
+
+        <label for="role">role du user</label>
+        <input type="text" id="text" name="text" required autocomplete="role">
 
         <button>Créer le compte</button>
         <p><?= htmlspecialchars($error) ?></p>

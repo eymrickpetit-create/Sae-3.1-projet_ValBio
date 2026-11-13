@@ -1,24 +1,25 @@
+/*
+    Les codes couleurs : 
+        bleu des header footer : 004B79
+*/
+
+
+
 body{
     background-color:#F7F8FA;
     margin: 0px;
 }
 
 nav{
+    background-color:#004B79 ;
     margin:0px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    background-color:#004B79 ;
-    /*height: 100px;
-    width:auto;*/
-    position: relative;
-    top: 0px;
-    left: 0px;
-    border: none ;
-    border-top: none ;
-    box-shadow: none;
+    position: absolute;
 }
 
-.top{
+#top{
     display: grid;
     margin:0px;
     width: 100%;
@@ -30,8 +31,16 @@ nav{
     vertical-align: middle;
 }
 
+form{
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background-color:#D9D9D9;
+}
+
 #bottom{
     margin:0px;
+    margin-bottom: 0px;
     vertical-align: bottom;
     position: fixed;
     bottom: 0;
@@ -47,6 +56,7 @@ nav{
 #logo{
 
 }
+
 #user{
 }
 
@@ -57,11 +67,12 @@ nav{
 }
 #logopersonnel
 {
-    padding: 1%;
+    /* padding: 1%; */
     width: 70px;
     height: 70px;
     vertical-align: middle;
 }
 
 #text{
+    
 }

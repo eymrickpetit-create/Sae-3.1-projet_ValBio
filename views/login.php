@@ -44,18 +44,30 @@ $_SESSION['csrf'] = bin2hex(random_bytes(32));
 </head>
 
 <body>
-    <header>
-       <img src="../img/valBioFull.png" alt="logo valbio" id="logoHPage">
-       <img src="../img/person.png" alt="logo valbio" id="logopersonnel">
-    </header>
+     <nav  id=top>
+        <div id=logo><img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
+        <!-- <div id=le_vide></div>
+        <div id=user>
+            <?php
 
-    <form method="post">
-        <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
-        <input type="text" name="login" required autocomplete="username">
-        <input type="password" name="password" required autocomplete="current-password">
-        <button>Connexion</button>
-        <p><?= htmlspecialchars($error) ?></p>
-    </form>
+            ?>
+            <img src="img/logo_user.webp" alt ="logo user" id=logopersonnel>
+        </div> -->
+    </nav>
+    <form method="post" id="formId">
+    <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+    <input type="string" name="login" required>
+    <input type="password" name="password" required>
+    <button>Connexion</button>
+    <p><?= htmlspecialchars($error) ?></p>
+</form>
+<nav  id=bottom>
+        <div id=text></div>
+            <p>
+                Paramètres de l'application
+            </p>
+        <div id=le_vide></div>
+    </nav>
 
 </body>
 </html>

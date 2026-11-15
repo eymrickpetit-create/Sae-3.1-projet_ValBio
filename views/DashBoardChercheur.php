@@ -20,20 +20,20 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 <head>
     <meta charset="UTF-8"/>
     <style type="text/css"></style>
-    <link rel="stylesheet" type="text/css" href="ValBio_gestion.css"/>
+    <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/>
     <title>acceuil chercheur</title>
 </head>
 
 <body>
 
     <nav  id=top>
-        <div id=logo><img src="img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
+        <div id=logo><img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
         <div id=le_vide></div>
         <div id=user>
             <?php
 
             ?>
-            <img src="img/logo_user.webp" alt ="logo user" id=logopersonnel>
+            <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>
         </div>
     </nav>
 

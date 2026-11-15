@@ -56,7 +56,7 @@ $_SESSION['csrf'] = bin2hex(random_bytes(32));
         <input type="password" id="confirm" name="confirm" required autocomplete="new-password">
 
         <label for="role">role du user</label>
-        <input type="text" id="text" name="text" required autocomplete="role">
+        <input type="text" id="role" name="role" required autocomplete="role">
 
         <button>Créer le compte</button>
         <p><?= htmlspecialchars($error) ?></p>

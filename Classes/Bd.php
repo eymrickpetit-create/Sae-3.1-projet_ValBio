@@ -10,10 +10,12 @@ class Bd {
    // Obenir le singleton
    static function getInstance(): ?PDO {
       if (self::$pdo == null) {
-         // $dsn = "mysql:host=localhost;dbname=ValBio;charset=utf8";
+         // $dsn = "mysql:host=localhost;dbname=labo_medical;charset=utf8";
          // self::$pdo = new PDO($dsn, "arleq1", "oct");
-         $dsn = "mysql:host=gigondas;dbname=petitpoe;charset=utf8";
-         self::$pdo = new PDO($dsn, "petitpoe", "petitpoe");
+         // $dsn = "mysql:host=gigondas;dbname=petitpoe;charset=utf8";
+         // self::$pdo = new PDO($dsn, "petitpoe", "petitpoe");
+         $dsn = "mysql:host=localhost;dbname=labo_medical;charset=utf8";
+         self::$pdo = new PDO($dsn, "root", "");
       }
       return self::$pdo;
    }

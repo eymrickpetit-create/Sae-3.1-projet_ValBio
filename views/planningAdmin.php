@@ -74,4 +74,15 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
         echo "</select>";
         ?>
     </div>
+
+    <nav  id=bottom>
+        <div id=logo></div>
+            <p>
+                Paramètres de l'application
+            </p>
+        <div id=le_vide></div>
+    </nav>
+
+</body>
+</html>
     

@@ -32,7 +32,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         $error = 'Ce login existe déjà';
     } catch (OutOfBoundsException $e) {
         $dao->insert(Utilisateur::creer($login, $password,$role,$nomU));
-        header('Location: login.php');
+        header('Location: DonneUser.php');
         exit;
     }
     }

@@ -39,15 +39,14 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 
     <div class=barre_gauche>
         <form method="post">
-        <input type="hidden" id="nomU" name="nomU" value=<?php >
         <button type="submit" formaction="DossAnaCher.php">
-            <span>Dossiers analyses</span>
+            <span>Dossiers analyses</span><br>
             Accéder aux dossiers
-        </section>
-        <section>
-            <h3>Planning</h3>
-            <p>Accéder au planning complet</p>
-        </section>
+        </button><br>
+        <button type="submit" formaction="planningCher.php">
+            <span>Planning</span><br>
+            Accéder au planning complet
+        </button>
     </div>
 
     <div class=mainpanel>

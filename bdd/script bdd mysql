@@ -65,6 +65,7 @@ CREATE TABLE utilisateur (
     LoginU VARCHAR(50) NOT NULL,
     MotDePasse VARCHAR(255) NOT NULL,  -- hash (password_hash en PHP), jamais en clair
     RoleUser VARCHAR(50) NOT NULL,
+    NomU VARCHAR(255) NOT NULL,
     PRIMARY KEY (LoginU)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

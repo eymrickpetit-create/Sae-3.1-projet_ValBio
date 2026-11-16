@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $pdo = Bd::getInstance();
     $dao  = new UtilisateurDAO($pdo);
-    var_dump(($_POST));
-    exit;
+    // var_dump(($_POST));
+    // exit;
     $user = $dao->getOne($_POST['login'] ?? '');
 
     try {// verification que utilisateur existe
@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user->getLogin();
         $_SESSION['state'] = true;
+        $_SESSION['nomU'] = $user->getNom();
         header('Location: Choosedashboard.php'); // envois vers script qui selectionne la bonnne page acceuil selon le role detecté
         exit;
     }
@@ -36,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $_SESSION['csrf'] = bin2hex(random_bytes(32));
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">

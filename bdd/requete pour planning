@@ -1,0 +1,36 @@
+SELECT 
+    pr.DatePrelevement AS date_intervention,
+    c.NoChercheur,
+    c.NomCher AS nom_chercheur,
+    c.Specialite AS specialite,
+    e.NoExamen AS numero_examen,
+    p.NomPa AS nom_patient,
+    p.PrenomPa AS prenom_patient,
+    pl.libelle AS type_prelevement,
+    e.DateCloture AS statut_cloture
+FROM prelever pr
+INNER JOIN chercheur c ON pr.NoChercheur = c.NoChercheur
+INNER JOIN examen e ON pr.NoExamen = e.NoExamen
+INNER JOIN patient p ON e.identifiantPa = p.identifiantPa
+INNER JOIN prelevement pl ON pr.NoPrel = pl.NoPrel
+ORDER BY pr.DatePrelevement ASC, c.NomCher ASC;
+//planning complet
+
+
+
+SELECT 
+    pr.DatePrelevement AS date_intervention,
+    e.NoExamen AS numero_examen,
+    p.NomPa AS nom_patient,
+    p.PrenomPa AS prenom_patient,
+    p.TelephonePa AS telephone_patient,
+    pl.libelle AS type_prelevement,
+    e.Observations AS observations
+FROM prelever pr
+INNER JOIN examen e ON pr.NoExamen = e.NoExamen
+INNER JOIN patient p ON e.identifiantPa = p.identifiantPa
+INNER JOIN prelevement pl ON pr.NoPrel = pl.NoPrel
+WHERE pr.NoChercheur = :id_chercheur
+  AND pr.DatePrelevement >= CURDATE() -- Optionnel : uniquement à partir d'aujourd'hui
+ORDER BY pr.DatePrelevement ASC, e.NoExamen ASC;
+//planning par chercheur

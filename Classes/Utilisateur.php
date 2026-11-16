@@ -6,15 +6,18 @@ class Utilisateur extends TableObject {
 
     public function getRole(): string { return $this->RoleUser; }
 
+        public function getNom(): string { return $this->NomU; }
+
     public function verifierMotDePasse(string $clair): bool {
         return password_verify($clair, $this->MotDePasse);
     }
 
-    public static function creer(string $login, string $clair, string $role): self {
+    public static function creer(string $login, string $clair, string $role,  string $nom): self {
         return new self([
             'LoginU'     => $login,
             'MotDePasse' => password_hash($clair, PASSWORD_DEFAULT),
             'RoleUser'   => $role,
+            'NomU'       => $nom
         ]);
     }
 

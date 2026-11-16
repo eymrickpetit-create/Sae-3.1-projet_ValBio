@@ -38,9 +38,11 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
     </nav>
 
     <div class=barre_gauche>
-        <section>
-            <h3>Dossiers analyses</h3>
-            <p>Accéder aux dossiers</p>
+        <form method="post">
+        <input type="hidden" id="nomU" name="nomU" value=<?php >
+        <button type="submit" formaction="DossAnaCher.php">
+            <span>Dossiers analyses</span>
+            Accéder aux dossiers
         </section>
         <section>
             <h3>Planning</h3>

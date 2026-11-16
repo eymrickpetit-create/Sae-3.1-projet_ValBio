@@ -25,20 +25,20 @@ class UtilisateurDAO extends DAO {
 
     public function insert(object $obj): int {
         // rempli params avec les champs ou null si non definis
-        $cols = ['LoginU', 'MotDePasse', 'RoleUser','nomU'];
+        $cols = ['LoginU', 'MotDePasse', 'RoleUser','NomU'];
         $params = [];
         foreach ($cols as $c) {
             $params[$c] = $obj->getFields()[$c] ?? null;
         }
-       $stmt =  $this->pdo->prepare("INSERT INTO utilisateur (LoginU, MotDePasse, RoleUser, nomU)
-        VALUES (:LoginU, :MotDePasse, :RoleUser, :nomU)");
+       $stmt =  $this->pdo->prepare("INSERT INTO utilisateur (LoginU, MotDePasse, RoleUser, NomU)
+        VALUES (:LoginU, :MotDePasse, :RoleUser, :NomU)");
        $res = $stmt->execute($params);
        return 0;
     }
 
     public function update(object $obj): int {
        $stmt = $this->pdo->prepare("UPDATE utilisateur SET 
-       MotDePasse=:MotDePasse, RoleUser=:RoleUser
+       MotDePasse=:MotDePasse, RoleUser=:RoleUser, NomU=:NomU
        WHERE LoginU=:LoginU");
        $res = $stmt->execute($obj->getFields());
        return 0;

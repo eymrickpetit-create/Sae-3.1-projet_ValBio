@@ -19,12 +19,20 @@ if(!isset($_POST['login'])){
 }
 
 if (isset($_POST['valider'])) {
+    $dao = new UtilisateurDAO(Bd::getInstance());
+
+    if(($_POST['mdpModif'] ?? '')===''){
+        $user = $dao->getOne($_POST['login']);
+        $_POST['mdpModif']=$user->getMotDePasseHash();
+    }
+
     $user = new Utilisateur([
         'LoginU'     => $_POST['login'],
-        'MotDePasse' => $_POST['mdpModif'],
+        'NomU'       => $_POST['nomModif'],
+        'MotDePasse' => password_hash($_POST['nomModif'], PASSWORD_DEFAULT),
         'RoleUser'   => $_POST['roleModif']
     ]);
-    $dao->update($user);               // adaptez au nom réel de votre méthode
+    $dao->update($user);              
     header('Location: DonneUser.php');   // page avec le tableau
     exit();
 }
@@ -39,7 +47,7 @@ if (isset($_POST['valider'])) {
     <meta charset="UTF-8"/>
     <style type="text/css"></style>
     <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/>
-    <title>page exemple</title>
+    <title>modification donné <?= $user->getNom()?></title>
 </head>
 
 <body>
@@ -74,9 +82,13 @@ if (isset($_POST['valider'])) {
         <form method="post">
             <input type="hidden" name="login" value="<?= htmlspecialchars($user->LoginU) ?>">
 
+            <label for="nomModif">Nom :</label>
+            <input type="text" id="nomModif" name="nomModif" required maxlength="50"
+            value="<?= htmlspecialchars($user->NomU) ?>">
+
             <label for="mdpModif">Mot de passe :</label>
-            <input type="text" id="mdpModif" name="mdpModif" required maxlength="50"
-            value="<?= htmlspecialchars($user->MotDePasse) ?>">
+            <input type="text" id="mdpModif" name="mdpModif" maxlength="50"
+            value="" placeholder="vide si non changé">
 
             <label for="roleModif">Rôle :</label>
             <input type="text" id="roleModif" name="roleModif" required maxlength="50"

@@ -39,22 +39,22 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 
     <div class=barre_gauche>
         <form method="post" >
-            <input type="hidden"
-            <button type="submit" formaction=" nom page planning chef">  <!----------------------------------------- a remplir -->
-                <span>Planning</span>
+            <input type="hidden">
+            <button type="submit" formaction="planningAdmin">
+                <span>Planning</span><br>
                 Accéder au planning complet
             </button>
+            <br>
             <button type="submit" formaction="AdministrationBd">
-                <span>Base de données</span>
+                <span>Base de données</span><br>
                 Accéder aux modifications des données
             </button>
         </form>
     </div>
 
     <div class=mainpanel>
-        <h4>Aperçu du planning d'aujourd'hui :</h4>
         <?php
-
+        
         ?>
     </div>
 

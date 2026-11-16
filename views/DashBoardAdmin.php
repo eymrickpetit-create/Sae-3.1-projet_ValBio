@@ -7,7 +7,7 @@ session_start();
 //Ou tout charger si besoin
 //loadAllClasses();
 
-if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
+if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state'] === true) {
 
 }else {
     // Aucune session active ou utilisateur non connecté : on redirige
@@ -26,26 +26,27 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 
 <body>
 
-    <nav  id=top>
+    <nav  id="top">
         <div id=logo><img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
-        <div id=le_vide></div>
-        <div id=user>
+        <div id="le_vide"></div>
+        <div id="user">
             <?php
-
+            $dao = new UtilisateurDAO(Bd::getInstance());
+            $user= $dao->getOne($_SESSION['user_id']);
             ?>
             <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>
         </div>
     </nav>
 
-    <div class=barre_gauche>
+    <div class="barre_gauche">
         <form method="post" >
             <input type="hidden">
-            <button type="submit" formaction="planningAdmin">
+            <button type="submit" formaction="planningAdmin.php">
                 <span>Planning</span><br>
                 Accéder au planning complet
             </button>
             <br>
-            <button type="submit" formaction="AdministrationBd">
+            <button type="submit" formaction="AdministrationBd.php">
                 <span>Base de données</span><br>
                 Accéder aux modifications des données
             </button>

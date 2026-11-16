@@ -8,7 +8,6 @@ class UtilisateurDAO extends DAO {
         $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE LoginU = ?");
         $stmt->execute(array($key));
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($stmt);
 
         if ($row === false) {
             throw new OutOfBoundsException('Utilisateur introuvable');
@@ -21,18 +20,18 @@ class UtilisateurDAO extends DAO {
         $stmt = $this->pdo->query("SELECT * FROM utilisateur ORDER BY LoginU");
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row)
             $res[] = new Utilisateur($row);
-        return 0;
+        return $res;
     }
 
     public function insert(object $obj): int {
         // rempli params avec les champs ou null si non definis
-        $cols = ['LoginU', 'MotDePasse', 'RoleUser'];
+        $cols = ['LoginU', 'MotDePasse', 'RoleUser','nomU'];
         $params = [];
         foreach ($cols as $c) {
             $params[$c] = $obj->getFields()[$c] ?? null;
         }
-       $stmt =  $this->pdo->prepare("INSERT INTO utilisateur (LoginU, MotDePasse, RoleUser)
-        VALUES (:LoginU, :MotDePasse, :RoleUser)");
+       $stmt =  $this->pdo->prepare("INSERT INTO utilisateur (LoginU, MotDePasse, RoleUser, nomU)
+        VALUES (:LoginU, :MotDePasse, :RoleUser, :nomU)");
        $res = $stmt->execute($params);
        return 0;
     }

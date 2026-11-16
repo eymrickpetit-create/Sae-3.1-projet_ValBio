@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $confirm  = $_POST['confirm'] ?? '';
     $role = $_POST['role'] ?? '';
+    $nomU = $_POST['role'] ?? '';
 
     if ($login === '' || strlen($login) > 50) {
         $error = 'Login invalide (1 à 50 caractères)';
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dao->getOne($login);
         $error = 'Ce login existe déjà';
     } catch (OutOfBoundsException $e) {
-        $dao->insert(Utilisateur::creer($login, $password,$role));
+        $dao->insert(Utilisateur::creer($login, $password,$role,$nomU));
         header('Location: login.php');
         exit;
     }
@@ -48,6 +49,9 @@ $_SESSION['csrf'] = bin2hex(random_bytes(32));
 
         <label for="login">Login</label>
         <input type="text" id="login" name="login" required maxlength="50" autocomplete="username">
+
+        <label for="nomU">nom</label>
+        <input type="text" id="nomU" name="nomU" required maxlength="100" autocomplete="complete name">
 
         <label for="password">Mot de passe</label>
         <input type="password" id="password" name="password" required autocomplete="new-password">

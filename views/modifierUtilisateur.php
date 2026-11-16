@@ -1,11 +1,11 @@
 <?php
 //ajout autoload
 require_once __DIR__ . '/../Classes/autoload.php';
-
+session_start();
 // Chargement à la demande d'un classe est automatique
 // Ou tout charger si besoin
 //loadAllClasses();
-if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
+if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state'] === true) {
 
 }else {
     // Aucune session active ou utilisateur non connecté : on redirige
@@ -24,13 +24,14 @@ if (isset($_POST['valider'])) {
         'MotDePasse' => $_POST['mdpModif'],
         'RoleUser'   => $_POST['roleModif']
     ]);
-    $users->update($user);               // adaptez au nom réel de votre méthode
-    header('Location: pageListe.php');   // page avec le tableau
+    $dao->update($user);               // adaptez au nom réel de votre méthode
+    header('Location: DonneUser.php');   // page avec le tableau
     exit();
 }
 
 // Sinon : on charge l'utilisateur choisi pour pré-remplir le formulaire
-    $user = $users->getOne($_POST['login']);
+    $dao = new UtilisateurDAO(Bd::getInstance());
+    $user = $dao->getOne($_POST['login']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -44,26 +45,30 @@ if (isset($_POST['valider'])) {
 <body>
 
     <nav  id=top>
-        <div id=logo><img src="img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
+        <div id=logo><img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
         <div id=le_vide></div>
         <div id=user>
             <?php
 
             ?>
-            <img src="img/logo_user.webp" alt ="logo user" id=logopersonnel>
+            <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>
         </div>
     </nav>
 
-    <nav class="sidebar">
-        <form>
-            <input type=submit id="planning" value="">
+    <div class="barre_gauche">
+        <form method="post" >
+            <input type="hidden">
+            <button type="submit" formaction="planningAdmin.php">
+                <span>Planning</span><br>
+                Accéder au planning complet
+            </button>
+            <br>
+            <button type="submit" formaction="AdministrationBd.php">
+                <span>Base de données</span><br>
+                Accéder aux modifications des données
+            </button>
         </form>
-        <h2>Base de données </h2>
-        <p> Accéder à la modifications des données</p>
-        <div class="nav-arrow">
-            <svg><!-- Votre icône de flèche --></svg>
-         </div>
-    </nav>
+    </div>
 
     <nav class="mainModif">
         <form method="post">

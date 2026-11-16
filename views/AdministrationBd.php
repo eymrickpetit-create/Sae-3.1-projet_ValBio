@@ -7,7 +7,7 @@ session_start();
 //Ou tout charger si besoin
 //loadAllClasses();
 
-if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
+if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state'] === true) {
 
 }else {
     // Aucune session active ou utilisateur non connecté : on redirige
@@ -38,16 +38,25 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
         </div>
     </nav>
 
-    <nav class="sidebar">
-    <form>
-        <input type="submit" id="planning" value="">
-    </form>
-    <h2>Base de données </h2>
-    <p> Accéder à la modifications des données</p>
-    <div class="nav-arrow">
-    <svg><!-- Votre icône de flèche --></svg>
+
+
+    <div class=barre_gauche>
+        <form method="post" >
+            <input type="hidden">
+            <button type="submit" formaction="planningAdmin.php">
+                <span>Planning</span><br>
+                Accéder au planning complet
+            </button> <br>
+
+            <button type="submit" formaction="AdministrationBd.php">
+                <span>Base de données</span><br>
+                Accéder aux modifications des données
+            </button>
+            <div class="nav-arrow">
+                <svg><!-- Votre icône de flèche --></svg>
+            </div>
+        </form>
     </div>
-    </nav>
 
     <nav class ="centraladminbd" >
     <h3>Quelles données souhaitez vous consulter ?</h3>

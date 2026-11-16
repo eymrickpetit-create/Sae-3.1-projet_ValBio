@@ -4,11 +4,11 @@
 
 //ajout autoload
 require_once __DIR__ . '/../Classes/autoload.php';
-
+session_start();
 // Chargement à la demande d'un classe est automatique
 // Ou tout charger si besoin
 //loadAllClasses();
-if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
+if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state'] === true) {
 
 }else {
     // Aucune session active ou utilisateur non connecté : on redirige
@@ -28,13 +28,13 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 <body>
 
     <nav  id=top>
-        <div id=logo><img src="img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
+        <div id=logo><img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
         <div id=le_vide></div>
         <div id=user>
             <?php
 
             ?>
-            <img src="img/logo_user.webp" alt ="logo user" id=logopersonnel>
+            <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>
         </div>
     </nav>
 

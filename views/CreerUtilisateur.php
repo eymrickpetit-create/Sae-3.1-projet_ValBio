@@ -4,16 +4,20 @@ require_once __DIR__ . '/../Classes/autoload.php';
 session_start();
 $error = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!hash_equals($_SESSION['csrf'] ?? '', $_POST['csrf'] ?? '')) {
-        die('Requête invalide');
-    }
+if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state'] === true) {
 
+}else {
+    // Aucune session active ou utilisateur non connecté : on redirige
+    header('Location: login.php');
+    exit();
+}
+
+   
     $login    = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm  = $_POST['confirm'] ?? '';
     $role = $_POST['role'] ?? '';
-    $nomU = $_POST['role'] ?? '';
+    $nomU = $_POST['nomU'] ?? '';
 
     if ($login === '' || strlen($login) > 50) {
         $error = 'Login invalide (1 à 50 caractères)';
@@ -31,10 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: login.php');
         exit;
     }
-}
-}
+    }
 
-$_SESSION['csrf'] = bin2hex(random_bytes(32));
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -44,26 +48,70 @@ $_SESSION['csrf'] = bin2hex(random_bytes(32));
     <title>création de compte</title>
 </head>
 <body>
-    <form method="post">
-        <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
 
-        <label for="login">Login</label>
-        <input type="text" id="login" name="login" required maxlength="50" autocomplete="username">
+    <nav id=top>
+        <div id=logo>
+            <form method="post" action="ChooseDashBoard.php">
+                <button type="submit">
+                    <img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage>
+                </button>
+            </form>
+        </div>
+        <div id=le_vide></div>
+        <div id=user>
+            <?php
 
-        <label for="nomU">nom</label>
-        <input type="text" id="nomU" name="nomU" required maxlength="100" autocomplete="complete name">
+            ?>
+            <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>
+        </div>
+    </nav>
 
-        <label for="password">Mot de passe</label>
-        <input type="password" id="password" name="password" required autocomplete="new-password">
+    <div class="barre_gauche">
+        <form method="post" >
+            <input type="hidden">
+            <button type="submit" formaction="planningAdmin.php">
+                <span>Planning</span><br>
+                Accéder au planning complet
+            </button>
+            <br>
+            <button type="submit" formaction="AdministrationBd.php">
+                <span>Base de données</span><br>
+                Accéder aux modifications des données
+            </button>
+        </form>
+    </div>
 
-        <label for="confirm">Confirmation</label>
-        <input type="password" id="confirm" name="confirm" required autocomplete="new-password">
+    <nav class="mainModif">
+        <form method="post">
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
 
-        <label for="role">role du user</label>
-        <input type="text" id="role" name="role" required autocomplete="role">
+            <label for="login">Login</label>
+            <input type="text" id="login" name="login" required maxlength="50" autocomplete="username">
 
-        <button>Créer le compte</button>
-        <p><?= htmlspecialchars($error) ?></p>
-    </form>
+            <label for="nomU">nom</label>
+            <input type="text" id="nomU" name="nomU" required maxlength="100" autocomplete="complete name">
+
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required autocomplete="new-password">
+
+            <label for="confirm">Confirmation</label>
+            <input type="password" id="confirm" name="confirm" required autocomplete="new-password">
+
+            <label for="role">role du user</label>
+            <input type="text" id="role" name="role" required autocomplete="role">
+
+            <button>Créer le compte</button>
+            <p><?= htmlspecialchars($error) ?></p>
+        </form>
+    </nav>
+
+
+    <nav  id=bottom>
+        <div id=logo></div>
+            <p>
+                Paramètres de l'application
+            </p>
+        <div id=le_vide></div>
+    </nav>
 </body>
 </html>

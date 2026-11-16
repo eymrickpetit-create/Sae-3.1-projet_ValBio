@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role'] = $user->getRole();
         $_SESSION['state'] = true;
         $_SESSION['nomU'] = $user->getNom();
-        header('Location: Choosedashboard.php'); // envois vers script qui selectionne la bonnne page acceuil selon le role detecté
+        header('Location: ChooseDashBoard.php'); // envois vers script qui selectionne la bonnne page acceuil selon le role detecté
         exit;
     }
     $error = 'Identifiants incorrects';

@@ -25,7 +25,13 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
 <body>
 
     <nav  id=top>
-        <div id=logo><img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
+       <div id=logo>
+            <form method="post" action="ChooseDashBoard.php">
+                <button type="submit">
+                    <img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage>
+                </button>
+            </form>
+        </div>
         <div id=le_vide></div>
         <div id=user>
             <?php
@@ -37,7 +43,6 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
 
     <div class=barre_gauche>
         <form method="post" >
-            <input type="hidden">
             <button type="submit" formaction="planningAdmin.php">
                 <span>Planning</span><br>
                 Accéder au planning complet

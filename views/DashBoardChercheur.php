@@ -39,7 +39,7 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 
     <div class=barre_gauche>
         <form method="post">
-        <button type="submit" formaction="DossAnaCher.php">
+        <button type="submit" formaction="chercheurAnalyse.php">
             <span>Dossiers analyses</span><br>
             Accéder aux dossiers
         </button><br>

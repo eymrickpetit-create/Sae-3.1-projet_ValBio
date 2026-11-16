@@ -54,7 +54,7 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 
     <div class=mainpanel>
         <?php
-        echo "select name='roleUtilisateur' id='role_select'";
+        echo "<select name='roleUtilisateur' id='role_select'>";
         foreach ($utilisateur->getRole() as $f) {
             echo "<option value=", $f->RoleUser,">",$f->RoleUser, "</option>\n";
         }

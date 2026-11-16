@@ -15,6 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $pdo = Bd::getInstance();
     $dao  = new UtilisateurDAO($pdo);
+    var_dump(($_POST));
+    exit;
     $user = $dao->getOne($_POST['login'] ?? '');
 
     try {// verification que utilisateur existe

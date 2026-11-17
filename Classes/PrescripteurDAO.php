@@ -11,6 +11,13 @@ class PrescripteurDAO extends DAO {
         return new Prescripteur($row);
     }
 
+    public function getOneByName(string|int|array $key): Prescripteur {
+        $stmt = $this->pdo->prepare("SELECT * FROM prescripteur WHERE nomPres = ?");
+        $stmt->execute(array($key));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return new Prescripteur($row);
+    }
+
     public function getAll(): array {
         $res = array();
         $stmt = $this->pdo->query("SELECT * FROM prescripteur ORDER BY NoPrecripteur");
@@ -21,13 +28,13 @@ class PrescripteurDAO extends DAO {
 
     public function insert(object $obj): int {
         // rempli params avec les champs ou null si non definis
-        $cols = ['NoPrecripteur', 'TypePrescripteur', 'AdressePres', 'nomPres', 'CodePres', 'LocalitePres', 'TelephonePres'];
+        $cols = ['TypePrescripteur', 'AdressePres', 'nomPres', 'CodePres', 'LocalitePres', 'TelephonePres'];
         $params = [];
         foreach ($cols as $c) {
             $params[$c] = $obj->getFields()[$c] ?? null;
         }
-       $stmt =  $this->pdo->prepare("INSERT INTO prescripteur (NoPrecripteur, TypePrescripteur, AdressePres, nomPres, CodePres, LocalitePres, TelephonePres)
-        VALUES (:NoPrecripteur, :TypePrescripteur, :AdressePres, :nomPres, :CodePres, :LocalitePres, :TelephonePres)");
+       $stmt =  $this->pdo->prepare("INSERT INTO prescripteur (TypePrescripteur, AdressePres, nomPres, CodePres, LocalitePres, TelephonePres)
+        VALUES (:TypePrescripteur, :AdressePres, :nomPres, :CodePres, :LocalitePres, :TelephonePres)");
        $res = $stmt->execute($params);
        return 0;
     }

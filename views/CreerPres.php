@@ -11,7 +11,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     header('Location: login.php');
     exit();
 }
-    $NoPres    = $_POST['NoPres'] ?? '' ;
+    $NomPres    = $_POST['NomPres'] ?? '' ;
     $type = $_POST['TypePres'] ?? '';
     $addr  = $_POST['AddPres'] ?? '';
     $code = $_POST['CodePres'] ?? '';
@@ -26,7 +26,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     } else {
     $dao = new PrescripteurDAO(Bd::getInstance());
     try {
-        $dao->getOne($NoPres);
+        $dao->getOneByName($NomPres);
         $error = 'Prescriptteur existe deja';
     } catch (OutOfBoundsException $e) {
         $dao->insert($pres);
@@ -34,7 +34,6 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         exit;
     }
     }
-
 
 
 ?>
@@ -58,7 +57,6 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         <div id=le_vide></div>
         <div id=user>
             <?= $_SESSION['nomU'];
-
             ?>
             <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>
         </div>
@@ -83,20 +81,20 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         <form method="post">
             <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
 
-            <label for="login">Login</label>
-            <input type="text" id="login" name="login" required maxlength="50" autocomplete="username">
+            <label for="NomPres">nom complet :</label>
+            <input type="text" id="NomPres" name="NomPres" required maxlength="50" autocomplete="NomPres">
 
-            <label for="nomU">nom</label>
-            <input type="text" id="nomU" name="nomU" required maxlength="100" autocomplete="complete name">
+            <label for="TypePres">type prescripteur :</label>
+            <input type="text" id="TypePres" name="TypePres" required maxlength="1" autocomplete="TypePres">
 
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required autocomplete="new-password">
+            <label for="AddPres">adresse</label>
+            <input type="text" id="AddPres" name="AddPres"  autocomplete="AddPres">
 
-            <label for="confirm">Confirmation</label>
-            <input type="password" id="confirm" name="confirm" required autocomplete="new-password">
+            <label for="CodePres">code postale</label>
+            <input type="text" id="CodePres" name="CodePres"  autocomplete="CodePres">
 
-            <label for="role">role du user</label>
-            <input type="text" id="role" name="role" required autocomplete="role">
+            <label for="TelPres">téléphone</label>
+            <input type="text" id="TelPres" name="TelPres" required maxlength="10" autocomplete="TelPres">
 
             <button>Créer le compte</button>
             <p><?= htmlspecialchars($error) ?></p>

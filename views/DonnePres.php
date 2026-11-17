@@ -22,7 +22,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     <meta charset="UTF-8"/>
     <style type="text/css"></style>
     <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/>
-    <title>visu données users</title>
+    <title>données prescripteurs</title>
 </head>
 
 <body>
@@ -44,19 +44,26 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         </div>
     </nav>
 
-    <nav class="sidebar">
-        <form>
-            <input type=submit id="planning" value="">
+     <div class=barre_gauche>
+        <form method="post" >
+            <input type="hidden">
+            <button type="submit" formaction="planningAdmin.php">
+                <span>Planning</span><br>
+                Accéder au planning complet
+            </button> <br>
+
+            <button type="submit" formaction="AdministrationBd.php">
+                <span>Base de données</span><br>
+                Accéder aux modifications des données
+            </button>
+            <div class="nav-arrow">
+                <svg><!-- Votre icône de flèche --></svg>
+            </div>
         </form>
-        <h2>Base de données </h2>
-        <p> Accéder à la modifications des données</p>
-        <div class="nav-arrow">
-            <svg><!-- Votre icône de flèche --></svg>
-         </div>
-    </nav>
+    </div>
 
     <nav classe ="centraladminbd" >
-        <h3>Données des demandeurs</h3>
+        <h3>Données des prescripteurs</h3>
 
         <div class="tableau-defilant">
             <table>
@@ -73,9 +80,9 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
                 </thead>
                 <tbody>
                 <?php 
-                $demandeurs = new PrescripteurDAO(Bd::getInstance());
-                $lesDemandeurs = $demandeurs->getAll();
-                    foreach ($lesDemandeurs as $d): 
+                    $dao = new PrescripteurDAO(Bd::getInstance());
+                    $prescripteurs = $dao->getAll();
+                    foreach ($prescripteurs as $d): 
                         echo "<tr>";
                         echo "<td>" . $d->NoPrecripteur . "</td>";
                         echo "<td>" . $d->TypePrescripteur . "</td>";
@@ -92,10 +99,10 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         </div>
         <div>
             <form  method="post"  > 
-            <p id="texteExplique"></p>
-            <input type="submit" formaction="modifDem.php" value="modifier">
-            <input type="submit" formaction="creeDem.php" value="creer un demandeur">
-            <input type="submit" formaction="suppDem.php" value="supprimer un demandeur">
+                <p id="texteExplique"></p>
+                <input type="submit" formaction="ModifierPres.php" value="modifier prescripteur">
+                <input type="submit" formaction="CreerPres.php" value="creer prescripteur">
+                <input type="submit" formaction="suppPres.php" value="supprimer prescripteur">
             </form>
         </div>
     </nav> 

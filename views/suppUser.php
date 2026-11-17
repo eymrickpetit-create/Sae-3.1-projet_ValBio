@@ -41,7 +41,7 @@ if (isset($_POST['valider'])) {
     <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/>
     <?php $dao = new UtilisateurDAO(Bd::getInstance());
     $pers = $dao->getOne($_POST['login'])?>
-    <title>modification donné <?= $pers->getNom()?></title>
+    <title>suppression données <?= $pers->getNom()?></title>
 </head>
 
 <body>

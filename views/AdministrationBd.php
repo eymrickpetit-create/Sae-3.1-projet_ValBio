@@ -22,7 +22,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     <meta charset="UTF-8"/>
     <style type="text/css"></style>
    <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/> 
-    <title>page exemple</title>
+    <title>Administration base de données</title>
 </head>
 
 <body>
@@ -65,15 +65,15 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     </div>
 
     <nav class ="centraladminbd" >
-    <h3>Quelles données souhaitez vous consulter ?</h3>
-    <form  method="post"  > 
-    <p id="texteExpliq"></p>
-    <input type="submit" formaction="DonneUser.php" value="Données des utilisateurs">
-    <input type="submit" formaction="DonneDem.php" value="Données des demandeurs">
-    <input type="submit" formaction="DonneCli.php" value="Données des patients">
-    <input type="submit" formaction="DonneAna.php" value="Données des analyses">
-    <input type="submit" formaction="DonneOrdRes.php" value="Données des ordonnances et résultats">
-    </form>
+        <h3>Quelles données souhaitez vous consulter ?</h3>
+        <form  method="post"  > 
+            <p id="texteExpliq"></p>
+            <input type="submit" formaction="DonneUser.php" value="Données des utilisateurs">
+            <input type="submit" formaction="DonnePres.php" value="Données des prescripteurs">
+            <input type="submit" formaction="DonneCli.php" value="Données des patients">
+            <input type="submit" formaction="DonneAna.php" value="Données des analyses">
+            <input type="submit" formaction="DonneOrdRes.php" value="Données des ordonnances et résultats">
+        </form>
     </nav> 
 
 

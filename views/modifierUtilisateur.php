@@ -47,7 +47,7 @@ if (isset($_POST['valider'])) {
     <meta charset="UTF-8"/>
     <style type="text/css"></style>
     <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/>
-    <title>modification donné <?= $user->getNom()?></title>
+    <title>modification données <?= $user->getNom()?></title>
 </head>
 
 <body>

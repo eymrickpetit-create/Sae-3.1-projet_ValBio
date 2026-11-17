@@ -19,7 +19,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     <meta charset="UTF-8"/>
     <style type="text/css"></style>
     <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/>
-    <title>page exemple</title>
+    <title>données utilisateurs</title>
 </head>
 
 <body>

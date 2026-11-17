@@ -9,10 +9,10 @@ CREATE TABLE prescripteur (
     NoPrecripteur INT NOT NULL AUTO_INCREMENT,
     TypePrescripteur VARCHAR(1) NOT NULL,
     AdressePres VARCHAR(50),
-    nomPres VARCHAR(50) NOT NULL UNIQUE,
+    nomPres VARCHAR(50) NOT NULL,
     CodePres CHAR(5),
     LocalitePres VARCHAR(50),
-    TelephonePres CHAR(10),
+    TelephonePres CHAR(10) NOT NULL,
     PRIMARY KEY (NoPrecripteur)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

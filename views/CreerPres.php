@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
     $dao = new PrescripteurDAO(Bd::getInstance());
     try {
-        $dao->getOneByName($NomPres);
+        $dao->getOneByPhone($tel);
         $error = 'Prescriptteur existe deja';
     } catch (OutOfBoundsException $e) {
-        $pres = Prescripteur::creer($NomPres, $type, $addr, $code, $loc, $tel);
+        $pres = Prescripteur::creerFirst($NomPres, $type, $addr, $code, $loc, $tel);
         $dao->insert($pres);
         header('Location: DonnePres.php');
         exit;

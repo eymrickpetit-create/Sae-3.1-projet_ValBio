@@ -79,7 +79,6 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
                             foreach ($lesusers as $i => $u):
                             $id = "u" . $i;
                             $login = htmlspecialchars($u->LoginU);
-                            // Adaptez 'nomU' en '$u->NomU' si la casse de votre objet PHP est différente
                             $NomU = htmlspecialchars($u->NomU); 
                         ?>
                             <tr>
@@ -91,7 +90,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-
+                <br>
                 <p id="texteExplique"></p>
 
                 <input type="submit" formaction="modifierUtilisateur.php" value="modifier">

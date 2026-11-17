@@ -11,13 +11,13 @@ class PrescripteurDAO extends DAO {
         return new Prescripteur($row);
     }
 
-    public function getOneByName(string|int|array $key): Prescripteur {
-        $stmt = $this->pdo->prepare("SELECT * FROM prescripteur WHERE nomPres = ?");
+    public function getOneByPhone(string|int|array $key): Prescripteur {
+        $stmt = $this->pdo->prepare("SELECT * FROM prescripteur WHERE TelephonePres = ?");
         $stmt->execute(array($key));
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row === false) {
-        throw new OutOfBoundsException("Aucun prescripteur trouvé avec ce nom.");
+        throw new OutOfBoundsException("Aucun prescripteur trouvé.");
         }
         
         return new Prescripteur($row);
@@ -49,7 +49,7 @@ class PrescripteurDAO extends DAO {
        TypePrescripteur=:TypePrescripteur, AdressePres=:AdressePres, nomPres=:nomPres, CodePres=:CodePres, LocalitePres=:LocalitePres, TelephonePres=:TelephonePres
        WHERE NoPrecripteur=:NoPrecripteur");
        $res = $stmt->execute($obj->getFields());
-       return $owCount();
+       return 0;
     }
 
     public function delete(object $obj): int {

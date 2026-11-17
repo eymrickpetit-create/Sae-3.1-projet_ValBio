@@ -15,6 +15,11 @@ class PrescripteurDAO extends DAO {
         $stmt = $this->pdo->prepare("SELECT * FROM prescripteur WHERE nomPres = ?");
         $stmt->execute(array($key));
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row === false) {
+        throw new OutOfBoundsException("Aucun prescripteur trouvé avec ce nom.");
+        }
+        
         return new Prescripteur($row);
     }
 

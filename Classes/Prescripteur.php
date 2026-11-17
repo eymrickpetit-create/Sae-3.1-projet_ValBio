@@ -9,6 +9,17 @@ class Prescripteur extends TableObject {
     public function getLoc(): string { return $this->LocalitePres; }
     public function getTel(): string { return $this->TelephonePres; }
     
-
+public static function creer(string $nomPres, string $typePres, string $addPres, string $codePres, string $locPres, string $telPres): self {
+    $donnees = [
+        'nomPres'  => $nomPres,
+        'TypePrescripteur' => $typePres,
+        'AdressePres'  => $addPres,
+        'CodePres' => $codePres,
+        'LocalitePres'  => $locPres,
+        'TelephonePres'  => $telPres
+    ];
+    
+    return new self($donnees);
+}
 
 }

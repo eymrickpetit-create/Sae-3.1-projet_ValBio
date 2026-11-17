@@ -9,7 +9,7 @@ CREATE TABLE prescripteur (
     NoPrecripteur INT NOT NULL AUTO_INCREMENT,
     TypePrescripteur VARCHAR(1) NOT NULL,
     AdressePres VARCHAR(50),
-    nomPres VARCHAR(50) NOT NULL,
+    nomPres VARCHAR(50) NOT NULL UNIQUE,
     CodePres CHAR(5),
     LocalitePres VARCHAR(50),
     TelephonePres CHAR(10),

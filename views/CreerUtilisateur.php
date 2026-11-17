@@ -12,7 +12,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     exit();
 }
 
-   
+   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login    = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm  = $_POST['confirm'] ?? '';
@@ -36,7 +36,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         exit;
     }
     }
-
+   }
 
 
 ?>

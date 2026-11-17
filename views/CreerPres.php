@@ -11,7 +11,9 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     header('Location: login.php');
     exit();
 }
-    $NomPres    = $_POST['NomPres'] ?? '' ;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $NomPres = trim($_POST['NomPres'] ?? '');
     $type = $_POST['TypePres'] ?? '';
     $addr  = $_POST['AddPres'] ?? '';
     $code = $_POST['CodePres'] ?? '';
@@ -29,12 +31,13 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         $dao->getOneByName($NomPres);
         $error = 'Prescriptteur existe deja';
     } catch (OutOfBoundsException $e) {
+        $pres = Prescripteur::creer($NomPres, $type, $addr, $code, $loc, $tel);
         $dao->insert($pres);
         header('Location: DonnePres.php');
         exit;
     }
     }
-
+}
 
 ?>
 <!DOCTYPE html>
@@ -79,24 +82,27 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
 
     <nav class="mainModif">
         <form method="post">
-            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?? '' ?>">
 
-            <label for="NomPres">nom complet :</label>
-            <input type="text" id="NomPres" name="NomPres" required maxlength="50" autocomplete="NomPres">
+            <label for="NomPres">Nom complet :</label>
+            <input type="text" id="NomPres" name="NomPres" required maxlength="50" autocomplete="off">
 
-            <label for="TypePres">type prescripteur :</label>
-            <input type="text" id="TypePres" name="TypePres" required maxlength="1" autocomplete="TypePres">
+            <label for="TypePres">Type prescripteur (1 lettre) :</label>
+            <input type="text" id="TypePres" name="TypePres" required maxlength="1" autocomplete="off">
 
-            <label for="AddPres">adresse</label>
-            <input type="text" id="AddPres" name="AddPres"  autocomplete="AddPres">
+            <label for="AddPres">Adresse :</label>
+            <input type="text" id="AddPres" name="AddPres" autocomplete="off">
 
-            <label for="CodePres">code postale</label>
-            <input type="text" id="CodePres" name="CodePres"  autocomplete="CodePres">
+            <label for="CodePres">Code postal :</label>
+            <input type="text" id="CodePres" name="CodePres" autocomplete="off">
 
-            <label for="TelPres">téléphone</label>
-            <input type="text" id="TelPres" name="TelPres" required maxlength="10" autocomplete="TelPres">
+            <label for="locPres">Ville :</label>
+            <input type="text" id="locPres" name="locPres" autocomplete="off">
 
-            <button>Créer le compte</button>
+            <label for="TelPres">Téléphone (10 chiffres) :</label>
+            <input type="text" id="TelPres" name="TelPres" maxlength="10" autocomplete="off">
+
+            <button type="submit">Créer le prescripteur</button>
             <p><?= htmlspecialchars($error) ?></p>
         </form>
     </nav>

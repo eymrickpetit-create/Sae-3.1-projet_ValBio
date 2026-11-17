@@ -61,7 +61,7 @@ if (isset($_POST['valider'])) {
         </div>
         <div id=le_vide></div>
         <div id=user>
-            <?php
+            <?= $_SESSION['nomU'];
 
             ?>
             <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>

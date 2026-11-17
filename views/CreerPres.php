@@ -21,16 +21,16 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     
     if (strlen($type) !== 1) {
         $error = 'le type prescripteur se represente avec une seul lettre';
-    } elseif ($password !== $confirm) {
-        $error = 'Les mots de passe ne correspondent pas';
+    } elseif (strlen($tel)!==10) {
+        $error = 'un telephone doit avoir 10 chiffres';
     } else {
     $dao = new PrescripteurDAO(Bd::getInstance());
     try {
         $dao->getOne($NoPres);
-        $error = 'Ce login existe déjà';
+        $error = 'Prescriptteur existe deja';
     } catch (OutOfBoundsException $e) {
-        $dao->insert(Utilisateur::creer($login, $password,$role,$nomU));
-        header('Location: DonneUser.php');
+        $dao->insert($pres);
+        header('Location: DonnePres.php');
         exit;
     }
     }
@@ -57,7 +57,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         </div>
         <div id=le_vide></div>
         <div id=user>
-            <?php
+            <?= $_SESSION['nomU'];
 
             ?>
             <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>

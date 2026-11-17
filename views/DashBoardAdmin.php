@@ -36,9 +36,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         </div>
         <div id="le_vide"></div>
         <div id="user">
-            <?php
-            $dao = new UtilisateurDAO(Bd::getInstance());
-            $user= $dao->getOne($_SESSION['user_id']);
+            <?= $_SESSION['nomU'];
             ?>
             <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>
         </div>

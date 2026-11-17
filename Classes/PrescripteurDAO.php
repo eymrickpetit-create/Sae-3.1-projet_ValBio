@@ -16,7 +16,7 @@ class PrescripteurDAO extends DAO {
         $stmt = $this->pdo->query("SELECT * FROM prescripteur ORDER BY NoPrecripteur");
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row)
             $res[] = new Prescripteur($row);
-        return rowCount();
+        return $res;
     }
 
     public function insert(object $obj): int {
@@ -29,7 +29,7 @@ class PrescripteurDAO extends DAO {
        $stmt =  $this->pdo->prepare("INSERT INTO prescripteur (NoPrecripteur, TypePrescripteur, AdressePres, nomPres, CodePres, LocalitePres, TelephonePres)
         VALUES (:NoPrecripteur, :TypePrescripteur, :AdressePres, :nomPres, :CodePres, :LocalitePres, :TelephonePres)");
        $res = $stmt->execute($params);
-       return rowCount();
+       return 0;
     }
 
     public function update(object $obj): int {
@@ -43,7 +43,7 @@ class PrescripteurDAO extends DAO {
     public function delete(object $obj): int {
         $stmt = $this->pdo->prepare("DELETE FROM prescripteur WHERE NoPrecripteur=?");
         $res = $stmt->execute(array($obj->NoPrecripteur));
-        return rowCount();
+        return 0;
     }
 
 

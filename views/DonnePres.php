@@ -66,40 +66,45 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         <h3>Données des prescripteurs</h3>
 
         <div class="tableau-defilant">
-            <table>
-                <thead>
-                    <tr>
-                        <th>N°Demandeur</th>
-                        <th>Type de demandeur</th>
-                        <th>Nom du demandeur</th>
-                        <th>Adresse</th>
-                        <th>Code postal</th>
-                        <th>Localité</th>
-                        <th>Téléphone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php 
-                    $dao = new PrescripteurDAO(Bd::getInstance());
-                    $prescripteurs = $dao->getAll();
-                    foreach ($prescripteurs as $d): 
-                        echo "<tr>";
-                        echo "<td>" . $d->NoPrecripteur . "</td>";
-                        echo "<td>" . $d->TypePrescripteur . "</td>";
-                        echo "<td>" . $d->nomPres . "</td>";
-                        echo "<td>" . $d->AdressePres . "</td>";
-                        echo "<td>" . $d->CodePres . "</td>";
-                        echo "<td>" . $d->LocalitePres . "</td>";
-                        echo "<td>" . $d->TelephonePres . "</td>";
-                        echo "</tr>";
-                    endforeach;
-                ?>
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <form  method="post"  > 
+            <form method="post">
+                <table>
+                    <thead>
+                        <tr>
+                            <th> </th>
+                            <th>N°rescripteur</th>
+                            <th>Type de prescripteur</th>
+                            <th>Nom du prescripteur</th>
+                            <th>Adresse prescripteur</th>
+                            <th>Code postal</th>
+                            <th>Localité</th>
+                            <th>Téléphone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php 
+                        $dao = new PrescripteurDAO(Bd::getInstance());
+                        $prescripteurs = $dao->getAll();
+                        foreach ($prescripteurs as $d): 
+                            $idPrescripteur = htmlspecialchars($d->NoPrecripteur);
+                            $id = "prescripteur_" . $idPrescripteur; // sera affiché prescripteur_ + no du pres
+                        ?>
+                            <tr>
+                                <td><input type="radio" name="NoPrecripteur" id="<?= $id ?>" value="<?= $idPrescripteur ?>"></td>
+                                <td><label for="<?= $id ?>"><?= $idPrescripteur ?></label></td>
+                                <td><label for="<?= $id ?>"><?= htmlspecialchars($d->TypePrescripteur) ?></label></td>
+                                <td><label for="<?= $id ?>"><?= htmlspecialchars($d->NomPres) ?></label></td>
+                                <td><label for="<?= $id ?>"><?= htmlspecialchars($d->AdressePres) ?></label></td>
+                                <td><label for="<?= $id ?>"><?= htmlspecialchars($d->CodePres) ?></label></td>
+                                <td><label for="<?= $id ?>"><?= htmlspecialchars($d->LocalitePres) ?></label></td>
+                                <td><label for="<?= $id ?>"><?= htmlspecialchars($d->TelephonePres) ?></label></td>
+                            </tr>
+                        <?php endforeach; ?>
+                
+                    </tbody>
+                </table>
+                <br>
                 <p id="texteExplique"></p>
+                
                 <input type="submit" formaction="ModifierPres.php" value="modifier prescripteur">
                 <input type="submit" formaction="CreerPres.php" value="creer prescripteur">
                 <input type="submit" formaction="suppPres.php" value="supprimer prescripteur">

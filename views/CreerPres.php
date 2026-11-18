@@ -11,11 +11,13 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     header('Location: login.php');
     exit();
 }
-    $NoPres    = $_POST['NoPres'] ?? '' ;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $NomPres = trim($_POST['NomPres'] ?? '');
     $type = $_POST['TypePres'] ?? '';
     $addr  = $_POST['AddPres'] ?? '';
     $code = $_POST['CodePres'] ?? '';
-    $loc = $_POST['LocPres'] ?? '';
+    $loc = $_POST['LocalitePres'] ?? '';
     $tel = $_POST['TelPres'] ?? '';
 
     
@@ -26,16 +28,16 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     } else {
     $dao = new PrescripteurDAO(Bd::getInstance());
     try {
-        $dao->getOne($NoPres);
+        $dao->getOneByPhone($tel);
         $error = 'Prescriptteur existe deja';
     } catch (OutOfBoundsException $e) {
+        $pres = Prescripteur::creerFirst($NomPres, $type, $addr, $code, $loc, $tel);
         $dao->insert($pres);
         header('Location: DonnePres.php');
         exit;
     }
     }
-
-
+}
 
 ?>
 <!DOCTYPE html>
@@ -58,7 +60,6 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
         <div id=le_vide></div>
         <div id=user>
             <?= $_SESSION['nomU'];
-
             ?>
             <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>
         </div>
@@ -81,24 +82,27 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
 
     <nav class="mainModif">
         <form method="post">
-            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?? '' ?>">
 
-            <label for="login">Login</label>
-            <input type="text" id="login" name="login" required maxlength="50" autocomplete="username">
+            <label for="NomPres">Nom complet :</label>
+            <input type="text" id="NomPres" name="NomPres" required maxlength="50" autocomplete="off">
 
-            <label for="nomU">nom</label>
-            <input type="text" id="nomU" name="nomU" required maxlength="100" autocomplete="complete name">
+            <label for="TypePres">Type prescripteur (1 lettre) :</label>
+            <input type="text" id="TypePres" name="TypePres" required maxlength="1" autocomplete="off">
 
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required autocomplete="new-password">
+            <label for="AddPres">Adresse :</label>
+            <input type="text" id="AddPres" name="AddPres" autocomplete="off">
 
-            <label for="confirm">Confirmation</label>
-            <input type="password" id="confirm" name="confirm" required autocomplete="new-password">
+            <label for="CodePres">Code postal :</label>
+            <input type="text" id="CodePres" name="CodePres" autocomplete="off">
 
-            <label for="role">role du user</label>
-            <input type="text" id="role" name="role" required autocomplete="role">
+            <label for="LocalitePres">Ville :</label>
+            <input type="text" id="LocalitePres" name="LocalitePres" autocomplete="off">
 
-            <button>Créer le compte</button>
+            <label for="TelPres">Téléphone (10 chiffres) :</label>
+            <input type="text" id="TelPres" name="TelPres" maxlength="10" autocomplete="off">
+
+            <button type="submit">Créer le prescripteur</button>
             <p><?= htmlspecialchars($error) ?></p>
         </form>
     </nav>

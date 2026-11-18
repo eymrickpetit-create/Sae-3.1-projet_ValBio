@@ -13,7 +13,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
     exit();
 }
 
-if(!isset($_POST['NoPres'])){
+if(!isset($_POST['NoPrecripteur'])){
     header('Location: DonnePres.php');
     exit();
 } 
@@ -22,15 +22,16 @@ if (isset($_POST['valider'])) {
     $dao = new PrescripteurDAO(Bd::getInstance());
 
     $pres = new Prescripteur([
-        'NoPrecripteur'     => $_POST['NoPres'],
+        'NoPrecripteur'     => $_POST['NoPrecripteur'],
         'TypePrescripteur'  => $_POST['TypePres'],
         'AdressePres'       => $_POST['AddPres'],
-        'nomPres'           => $_POST['NomPres'],
+        'NomPres'           => $_POST['NomPres'],
         'CodePres'          => $_POST['CodePres'], 
         'LocalitePres'      => $_POST['LocPres'], 
         'TelephonePres'     => $_POST['TelPres']
 
     ]);
+
     $dao->update($pres);              
     header('Location: DonnePres.php');   // page avec le tableau
     exit();
@@ -38,7 +39,7 @@ if (isset($_POST['valider'])) {
 
 // Sinon : on charge l'utilisateur choisi pour pré-remplir le formulaire
     $dao = new PrescripteurDAO(Bd::getInstance());
-    $pres = $dao->getOne($_POST['NoPres']);
+    $pres = $dao->getOne($_POST['NoPrecripteur']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -85,7 +86,7 @@ if (isset($_POST['valider'])) {
 
     <nav class="mainModif">
         <form method="post">
-            <input type="hidden" name="NoPres" value="<?= htmlspecialchars($pres->getNo()) ?>">
+            <input type="hidden" name="NoPrecripteur" value="<?= htmlspecialchars($_POST['NoPrecripteur']) ?>">
 
             <label for="NomPres">Nom :</label>
             <input type="text" id="NomPres" name="NomPres" required maxlength="50"
@@ -96,15 +97,15 @@ if (isset($_POST['valider'])) {
             value="<?= htmlspecialchars($pres->getType()) ?>">
 
             <label for="CodePres">Code postale :</label>
-            <input type="text" id="CodePres" name="CodePres" required maxlength="10"
+            <input type="text" id="CodePres" name="CodePres"  maxlength="10"
             value="<?= htmlspecialchars($pres->getCode()) ?>">
 
             <label for="AddPres">Adresse :</label>
-            <input type="text" id="AddPres" name="AddPres" required maxlength="100"
+            <input type="text" id="AddPres" name="AddPres"  maxlength="100"
             value="<?= htmlspecialchars($pres->getAddr()) ?>">
 
             <label for="LocPres">localité :</label>
-            <input type="text" id="LocPres" name="LocPres" required maxlength="100"
+            <input type="text" id="LocPres" name="LocPres"  maxlength="100"
             value="<?= htmlspecialchars($pres->getLoc()) ?>">
 
             <label for="TelPres">Téléphone :</label>

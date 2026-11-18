@@ -6,7 +6,7 @@ class Utilisateur extends TableObject {
 
     public function getRole(): string { return $this->RoleUser; }
 
-        public function getNom(): string { return $this->NomU; }
+    public function getNom(): string { return $this->NomU; }
 
     public function verifierMotDePasse(string $clair): bool {
         return password_verify($clair, $this->MotDePasse);

@@ -21,16 +21,22 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
     <meta charset="UTF-8"/>
     <style type="text/css"></style>
     <link rel="stylesheet" type="text/css" href="../ValBio_gestion.css"/>
-    <title>acceuil administrateur</title>
+    <title>planning complet administration</title>
 </head>
 
 <body>
 
     <nav  id=top>
-        <div id=logo><img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
+        <div id=logo>
+            <form method="post" action="ChooseDashBoard.php">
+                <button type="submit">
+                    <img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage>
+                </button>
+            </form>
+        </div>
         <div id=le_vide></div>
         <div id=user>
-            <?php
+            <?= $_SESSION['nomU'];
 
             ?>
             <img src="../img/logo_user.webp" alt ="logo user" id=logopersonnel>
@@ -39,16 +45,18 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 
     <div class=barre_gauche>
         <form method="post" >
-            
-            <button type="submit" formaction="planningAdmin">
+            <button type="submit" formaction="planningAdmin.php">
                 <span>Planning</span><br>
                 Accéder au planning complet
-            </button>
-            <br>
-            <button type="submit" formaction="AdministrationBd">
+            </button> <br>
+
+            <button type="submit" formaction="AdministrationBd.php">
                 <span>Base de données</span><br>
                 Accéder aux modifications des données
             </button>
+            <div class="nav-arrow">
+                <svg><!-- Votre icône de flèche --></svg>
+            </div>
         </form>
     </div>
 
@@ -66,4 +74,15 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
         echo "</select>";
         ?>
     </div>
+
+    <nav  id=bottom>
+        <div id=logo></div>
+            <p>
+                Paramètres de l'application
+            </p>
+        <div id=le_vide></div>
+    </nav>
+
+</body>
+</html>
     

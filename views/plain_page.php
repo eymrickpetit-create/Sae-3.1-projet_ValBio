@@ -29,10 +29,16 @@ if (isset($_SESSION['state']) && $_SESSION['state'] === true) {
 
     
     <nav  id=top>
-        <div id=logo><img src="img/valBioFull.png" alt ="logo valbio" id=logoHPage></div>
+        <div id=logo>
+            <form method="post" action="ChooseDashBoard.php">
+                <button type="submit">
+                    <img src="../img/valBioFull.png" alt ="logo valbio" id=logoHPage>
+                </button>
+            </form>
+        </div>
         <div id=le_vide></div>
         <div id=user>
-            <?php
+            <?= $_SESSION['nomU'];
 
             ?>
             <img src="img/logo_user.webp" alt ="logo user" id=logopersonnel>

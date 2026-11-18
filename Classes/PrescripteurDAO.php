@@ -33,20 +33,23 @@ class PrescripteurDAO extends DAO {
 
     public function insert(object $obj): int {
         // rempli params avec les champs ou null si non definis
-        $cols = ['TypePrescripteur', 'AdressePres', 'nomPres', 'CodePres', 'LocalitePres', 'TelephonePres'];
+        $cols = ['TypePrescripteur', 'AdressePres', 'NomPres', 'CodePres', 'LocalitePres', 'TelephonePres'];
         $params = [];
+
+        
         foreach ($cols as $c) {
             $params[$c] = $obj->getFields()[$c] ?? null;
         }
-       $stmt =  $this->pdo->prepare("INSERT INTO prescripteur (TypePrescripteur, AdressePres, nomPres, CodePres, LocalitePres, TelephonePres)
-        VALUES (:TypePrescripteur, :AdressePres, :nomPres, :CodePres, :LocalitePres, :TelephonePres)");
-       $res = $stmt->execute($params);
-       return 0;
+
+       $stmt =  $this->pdo->prepare("INSERT INTO prescripteur (TypePrescripteur, AdressePres, NomPres, CodePres, LocalitePres, TelephonePres)
+        VALUES (:TypePrescripteur, :AdressePres, :NomPres, :CodePres, :LocalitePres, :TelephonePres)");
+       $stmt->execute($params);
+       return  0;
     }
 
     public function update(object $obj): int {
        $stmt = $this->pdo->prepare("UPDATE prescripteur SET 
-       TypePrescripteur=:TypePrescripteur, AdressePres=:AdressePres, nomPres=:nomPres, CodePres=:CodePres, LocalitePres=:LocalitePres, TelephonePres=:TelephonePres
+       TypePrescripteur=:TypePrescripteur, AdressePres=:AdressePres, NomPres=:NomPres, CodePres=:CodePres, LocalitePres=:LocalitePres, TelephonePres=:TelephonePres
        WHERE NoPrecripteur=:NoPrecripteur");
        $res = $stmt->execute($obj->getFields());
        return 0;

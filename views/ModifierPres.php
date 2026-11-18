@@ -25,12 +25,13 @@ if (isset($_POST['valider'])) {
         'NoPrecripteur'     => $_POST['NoPrecripteur'],
         'TypePrescripteur'  => $_POST['TypePres'],
         'AdressePres'       => $_POST['AddPres'],
-        'nomPres'           => $_POST['NomPres'],
+        'NomPres'           => $_POST['NomPres'],
         'CodePres'          => $_POST['CodePres'], 
         'LocalitePres'      => $_POST['LocPres'], 
         'TelephonePres'     => $_POST['TelPres']
 
     ]);
+
     $dao->update($pres);              
     header('Location: DonnePres.php');   // page avec le tableau
     exit();

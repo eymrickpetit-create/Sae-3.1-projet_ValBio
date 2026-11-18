@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $type = $_POST['TypePres'] ?? '';
     $addr  = $_POST['AddPres'] ?? '';
     $code = $_POST['CodePres'] ?? '';
-    $loc = $_POST['LocPres'] ?? '';
+    $loc = $_POST['LocalitePres'] ?? '';
     $tel = $_POST['TelPres'] ?? '';
 
     
@@ -96,8 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="CodePres">Code postal :</label>
             <input type="text" id="CodePres" name="CodePres" autocomplete="off">
 
-            <label for="locPres">Ville :</label>
-            <input type="text" id="locPres" name="locPres" autocomplete="off">
+            <label for="LocalitePres">Ville :</label>
+            <input type="text" id="LocalitePres" name="LocalitePres" autocomplete="off">
 
             <label for="TelPres">Téléphone (10 chiffres) :</label>
             <input type="text" id="TelPres" name="TelPres" maxlength="10" autocomplete="off">

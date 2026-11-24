@@ -1,0 +1,47 @@
+:root {
+  --bordure: #ccc;
+  --fond-entete: #f5f5f5;
+  --texte-discret: #666;
+  --hauteur-heure: 60px;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 2rem;
+}
+
+.planning {
+  display: grid;
+  grid-template-columns: 60px repeat(5, 1fr);
+  grid-template-rows: 40px repeat(4, var(--hauteur-heure));
+  border: 1px solid var(--bordure);
+}
+
+.entete {
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background: var(--fond-entete);
+  border-bottom: 1px solid var(--bordure);
+  border-left: 1px solid var(--bordure);
+}
+
+.heure {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--bordure);
+  padding: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--texte-discret);
+}
+
+.creneaux {
+  z-index: 1;
+  margin: 2px;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  background: var(--fond-entete);
+  border: 1px solid var(--bordure);
+  border-left: 4px solid #333;
+}

@@ -23,6 +23,7 @@ class PatientDAO extends DAO {
 
     public function getAll(): array {
         $res = array();
+       
         $stmt = $this->pdo->query("SELECT * FROM patient ORDER BY identifiantPa");
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $res[] = new Patient($row);

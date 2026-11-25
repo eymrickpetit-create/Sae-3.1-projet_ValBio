@@ -2,76 +2,36 @@
 class Patient extends TableObject {
 
 public function getIdentifiantPa(): int
-{
-    return $this->identifiantPa;
-}
-
+{return $this->identifiantPa;}
 public function getNoSS(): string
-{
-    return $this->NoSS;
-}
-
+{return $this->NoSS;}
 public function getNomPa(): string
-{
-    return $this->NomPa;
-}
-
+{return $this->NomPa;}
 public function getPrenomPa(): string
-{
-    return $this->PrenomPa;
-}
-
+{return $this->PrenomPa;}
 public function getSexePa(): string
-{
-    return $this->SexePa;
-}
-
+{return $this->SexePa;}
 public function getNomUsagePa(): ?string
-{
-    return $this->NomUsagePa;
-}
-
+{return $this->NomUsagePa;}
 public function getAdressePa(): string
-{
-    return $this->AdressePa;
-}
-
+{return $this->AdressePa;}
 public function getCodePa(): string
-{
-    return $this->CodePa;
-}
-
+{return $this->CodePa;}
 public function getLocalitePa(): string
-{
-    return $this->LocalitePa;
-}
-
+{return $this->LocalitePa;}
 public function getTelephonePa(): string
-{
-    return $this->TelephonePa;
-}
-
+{return $this->TelephonePa;}
 public function getDateNaissPa(): string
-{
-    return $this->DateNaissPa;
-}
-
+{return $this->DateNaissPa;}
 public function getProfessionPa(): string
-{
-    return $this->ProfessionPa;
-}
-
-public function getValidDroitPa(): string
-{
-    return $this->ValidDroitPa;
-}
-
+{return $this->ProfessionPa;}
+public function getValidDroitPa(): ?string
+{return $this->ValidDroitPa;}
 public function getResteChargePrctPa(): float
-{
-    return $this->ResteChargePrctPa;
+{return $this->ResteChargePrctPa;
 }
 
-public static function creer (string $noSS,string $nomPa, string $prenomPa, string $sexePa, ?string $nomUsagePa,string $adressePa, string $codePa, string $localitePa, string $telephonePa, string $dateNaissPa, string $professionPa, string $validDroitPa, string $resteChargePrctPa) {
+public static function creer (string $NoSS,string $NomPa, string $PrenomPa, string $SexePa, ?string $NomUsagePa,string $AdressePa, string $CodePa, string $LocalitePa, string $TelephonePa, string $DateNaissPa, string $ProfessionPa, ?string $ValidDroitPa, float $ResteChargePrctPa) {
      $donnees = [
         'NoSS' => $NoSS,
         'NomPa' => $NomPa,
@@ -83,6 +43,7 @@ public static function creer (string $noSS,string $nomPa, string $prenomPa, stri
         'LocalitePa' => $LocalitePa,
         'TelephonePa' => $TelephonePa,
         'DateNaissPa' => $DateNaissPa,
+        'ProfessionPa' => $ProfessionPa,
         'ValidDroitPa' => $ValidDroitPa,
         'ResteChargePrctPa' => $ResteChargePrctPa
      ];

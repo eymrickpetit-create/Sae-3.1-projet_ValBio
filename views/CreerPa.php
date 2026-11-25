@@ -23,7 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $LocalitePa = $_POST['LocalitePa'] ?? '';
     $TelephonePa = $_POST['TelephonePa'] ?? '';
     $DateNaissPa = $_POST['DateNaissPa'] ?? '';
-    $ValidDroitPa = $_POST['ValidDroitPa'] ?? '';
+    $ProfessionPa = $_POST['ProfessionPa'] ?? '';
+    $ValidDroitPa = trim($_POST['ValidDroitPa'] ?? '');
+    $ValidDroitPa = $ValidDroitPa !== '' ? $ValidDroitPa : null;
     $ResteChargePrctPa = $_POST['ResteChargePrctPa'] ?? '';
     
     if (strlen($NoSS) !== 15) {
@@ -42,7 +44,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dao->getOneByNoSS($NoSS);
         $error = 'Patient existe deja';
     } catch (OutOfBoundsException $e) {
-        $pa = Patient::creer( $noSS,$nomPa,$prenomPa,$sexePa,$nomUsagePa,$adressePa,$codePa, $localitePa,$telephonePa,$dateNaissPa,$professionPa,$validDroitPa,$resteChargePrctPa);
+        $pa = Patient::creer(
+    $NoSS,
+    $NomPa,
+    $PrenomPa,
+    $SexePa,
+    $NomUsagePa !== '' ? $NomUsagePa : null,
+    $AdressePa,
+    $CodePa,
+    $LocalitePa,
+    $TelephonePa,
+    $DateNaissPa,
+    $ProfessionPa,
+    $ValidDroitPa,
+    (float) $ResteChargePrctPa);
         $dao->insert($pa);
         header('Location: DonneCli.php');
         exit;
@@ -124,10 +139,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" id="LocalitePa" name="LocalitePa" autocomplete="off">
 
             <label for="TelephonePa">Téléphone :</label>
-            <input type="tel" id="TelephonePa" name="TelephonePa" maxlength="15" autocomplete="off">
+            <input type="tel" id="TelephonePa" name="TelephonePa" maxlength="10s" autocomplete="off">
 
             <label for="DateNaissPa">Date de naissance :</label>
             <input type="date" id="DateNaissPa" name="DateNaissPa" required autocomplete="off">
+
+            <label for="ProfessionPa,">Profession :</label>
+            <input type="string" id="ProfessionPa" name="ProfessionPa" autocomplete="off">
 
             <label for="ValidDroitPa">Validité des droits :</label>
             <input type="date" id="ValidDroitPa" name="ValidDroitPa" autocomplete="off">

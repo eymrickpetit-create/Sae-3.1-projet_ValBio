@@ -19,17 +19,19 @@ class TableObject {
     // Permettent d'accéder aux attributs comme s'ils étaient 'public'
     // $obj->attribut = "truc"; 
     // echo $obj->attribut;   
-    public function __get($field) {
-        if (isset($this->fields[$field]))
+   public function __get($field) {
+        if (array_key_exists($field, $this->fields)) {
             return $this->fields[$field];
-        throw new Exception("Invalid field name $field in ". get_class($this));
+        }
+        throw new Exception("Invalid field name $field in " . get_class($this));
     }
 
     public function __set($field, $value) {
-        if (isset($this->fields[$field]))
+        if (array_key_exists($field, $this->fields)) {
             $this->fields[$field] = $value;
-        else 
-            throw new Exception("Invalid field name $field in ". get_class($this));
+        } else {
+            throw new Exception("Invalid field name $field in " . get_class($this));
+        }
     }
 
     public function __isset($field) {

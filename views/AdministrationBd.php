@@ -69,7 +69,7 @@ if (isset($_SESSION['state']) && $_SESSION['role']==='admin' && $_SESSION['state
             <p id="texteExpliq"></p>
             <input type="submit" formaction="DonneUser.php" value="Données des utilisateurs">
             <input type="submit" formaction="DonnePres.php" value="Données des prescripteurs">
-            <input type="submit" formaction="DonneCli.php" value="Données des patients">
+            <input type="submit" formaction="DonnePa.php" value="Données des patients">
             <input type="submit" formaction="DonneAna.php" value="Données des analyses">
             <input type="submit" formaction="DonneOrdRes.php" value="Données des ordonnances et résultats">
         </form>

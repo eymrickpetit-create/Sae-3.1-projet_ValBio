@@ -13,7 +13,6 @@ if (isset($_SESSION['state']) && ($_SESSION['role']==='admin' || $_SESSION['role
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $IdPa = $_POST['IdPa'] ?? '';
     $NoSS = $_POST['NoSS'] ?? '';
     $NomPa = $_POST['NomPa'] ?? '';
     $PrenomPa = $_POST['PrenomPa'] ?? '';
@@ -43,7 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dao->getOneByNoSS($NoSS);
         $error = 'Patient existe deja';
     } catch (OutOfBoundsException $e) {
-        $pa = 
+        $pa = Patient::creer( $noSS,$nomPa,$prenomPa,$sexePa,$nomUsagePa,$adressePa,$codePa, $localitePa,$telephonePa,$dateNaissPa,$professionPa,$validDroitPa,$resteChargePrctPa);
+        $dao->insert($pa);
         header('Location: DonneCli.php');
         exit;
     }
@@ -93,26 +93,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <nav class="mainModif">
         <form method="post">
-            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?? '' ?>">
+            <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['csrf'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
 
-            <label for="NomPres">Nom complet :</label>
-            <input type="text" id="NomPres" name="NomPres" required maxlength="50" autocomplete="off">
+            <label for="NoSS">Numéro de sécurité sociale :</label>
+            <input type="text" id="NoSS" name="NoSS" required maxlength="15" autocomplete="off">
 
-            <label for="TypePres">Type prescripteur (1 lettre) :</label>
-            <input type="text" id="TypePres" name="TypePres" required maxlength="1" autocomplete="off">
+            <label for="NomPa">Nom :</label>
+            <input type="text" id="NomPa" name="NomPa" required maxlength="50" autocomplete="off">
 
-            <label for="AddPres">Adresse :</label>
-            <input type="text" id="AddPres" name="AddPres" autocomplete="off">
+            <label for="PrenomPa">Prénom :</label>
+            <input type="text" id="PrenomPa" name="PrenomPa" required maxlength="50" autocomplete="off">
 
-            <label for="CodePres">Code postal :</label>
-            <input type="text" id="CodePres" name="CodePres" autocomplete="off">
+            <label for="SexePa">Sexe :</label>
+            <select id="SexePa" name="SexePa" required autocomplete="off">
+                <option value="">-- Choisir --</option>
+                <option value="M">Masculin (M)</option>
+                <option value="F">Féminin (F)</option>
+            </select>
 
-            <label for="LocalitePres">Ville :</label>
-            <input type="text" id="LocalitePres" name="LocalitePres" autocomplete="off">
+            <label for="NomUsagePa">Nom d'usage :</label>
+            <input type="text" id="NomUsagePa" name="NomUsagePa" maxlength="50" autocomplete="off">
 
-            <label for="TelPres">Téléphone (10 chiffres) :</label>
-            <input type="text" id="TelPres" name="TelPres" maxlength="10" autocomplete="off">
+            <label for="AdressePa">Adresse :</label>
+            <input type="text" id="AdressePa" name="AdressePa" autocomplete="off">
 
+            <label for="CodePa">Code postal :</label>
+            <input type="text" id="CodePa" name="CodePa" maxlength="10" autocomplete="off">
+
+            <label for="LocalitePa">Ville :</label>
+            <input type="text" id="LocalitePa" name="LocalitePa" autocomplete="off">
+
+            <label for="TelephonePa">Téléphone :</label>
+            <input type="tel" id="TelephonePa" name="TelephonePa" maxlength="15" autocomplete="off">
+
+            <label for="DateNaissPa">Date de naissance :</label>
+            <input type="date" id="DateNaissPa" name="DateNaissPa" required autocomplete="off">
+
+            <label for="ValidDroitPa">Validité des droits :</label>
+            <input type="date" id="ValidDroitPa" name="ValidDroitPa" autocomplete="off">
+
+            <label for="ResteChargePrctPa">Reste à charge (%) :</label>
+            <input type="number" id="ResteChargePrctPa" name="ResteChargePrctPa" step="0.01" min="0" max="100" autocomplete="off">
             <button type="submit">Créer le prescripteur</button>
             <p><?= htmlspecialchars($error) ?></p>
         </form>
